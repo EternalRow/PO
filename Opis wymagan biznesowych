@@ -1,0 +1,9 @@
+System rezerwacji pojazdów obsługuje rezerwację i zwrot pojazdów.
+W systemie istnieją Klienci (wypożyczający sprzęt oraz) Pracownicy Obsługi potwierdzający rezerwację i zwrot sprzętu. Każdy z nich posiada id, imię oraz nazwisko. 
+Dodatkowo użytkownik posiada Konto, na którym widzi swoje rezerwacje oraz ewentualne naliczone kary.
+
+System posiada rejestr pojazdów dostępny dla każdego Użykownika. Żeby wypożyczyć pojazd Klient wprowadza numer Pojazdu z rejestru oraz termin, na który wypożycza Pojazd.
+Po zatwierdzeniu rezerwacji przez Pracownika Obsługi, Klient dokonuje Płatności na liczby dni i stawki dobowej. Klient może jednorazowo przedłużyć termin Rezerwacji pojazdu, dokonując dodatkową Płatność.
+Zwrot Pojazdu musi być potwierdzony przez Pracownika Obsługi, a Klient musi zapłacić ewentualną karę za przekoroczenie terminu.
+
+Pojedyncza Rezerwacja składa się z jednej lub więcej Pozycji Rezerwacji, z których każda odnosi się do konkretnego Pojazdu. Usunięcie Rezerwacji z systemu powoduje usunięcie wszystkich jego pozycji.
