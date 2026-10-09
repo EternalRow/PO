@@ -7,3 +7,47 @@ Po zatwierdzeniu rezerwacji przez Pracownika Obsługi, Klient dokonuje Płatnoś
 Zwrot Pojazdu musi być potwierdzony przez Pracownika Obsługi, a Klient musi zapłacić ewentualną karę za przekoroczenie terminu.
 
 Pojedyncza Rezerwacja składa się z jednej lub więcej Pozycji Rezerwacji, z których każda odnosi się do konkretnego Pojazdu. Usunięcie Rezerwacji z systemu powoduje usunięcie wszystkich jego pozycji.
+
+Jako klient
+chcę przeglądać dostępne pojazdy,
+aby sprawdzić, czy mogę zarezerować interesujący mnie pojazd / aby znaleźć interesujący mnie pojazd.
+Kryterium akceptacji: System zwraca listę dostępnych pojazdów.
+
+Jako klient
+chcę złożyć rezerwację,
+aby móc użyć pojazdu w wybranym przeze mnie terminie.
+Kryterium akceptacji: Tworzy się nowy obiekt rezerwacja zawierający pozycję rezerwacji powiązaną z pojazdem; jednocześnie zarezerwowany pojazd znika z listy dostępnych pojazdów i tworzy się obiekt klasy Płatność.
+
+Jako klient
+chcę mieć możliwośc opłacenia rezerwacji,
+aby rezerwacja została zatwierdzona.
+Kryterium akceptacji: 
+
+
+Jako klient,
+chce mieć możliwość przedłużenia terminu zwrotu pojazdu,
+aby uniknąć kar za ich niedotrzymanie.
+Kryterium akceptacji: Atrybut terminZwrotu w klasie Wypozyczenia zmienia się o tydzień.
+
+Jako pracownik obsługi
+chcę dodać do systemu nowy pojazd,
+aby poszerzyć ofertę naszej firmy.
+Kryterium akceptacji: Nowy obiekt klasy Pojazd trafia do głównej listy systemu i jest widoczny dla klientów.
+
+Jako pracownik obsługi
+chcę móc potwierdzać opłacone rezerwacje,
+aby klienci mieli pewność dokonania rezerwacji i zapobiec rezerwacji pojazdu przez innego klienta.
+Kryterium akceptacji: Atrybut 'status' obiektu rezerwacji zmienia się na 'aktywny', a na koncie klienta wzrasta liczba rezerwacji.
+
+Jako pracownik obsługi
+chcę rejestrować zwrot sprzętu,
+aby udostępnić zwrócone pojazdy do wypożyczenia następnym klientom.
+Kryterium akceptacji: Atrybut 'status' obiektu rezerwacji zmienia się na 'aktywny', a wypożyczenie znika z konta Klienta.
+
+Jako klient
+chcę mieć dostęp do swojego konta,
+aby przeglądać rezerwacje i pilnować terminu zwrotu pojazdu.
+
+Jako pracowik obsługi
+chcę móc naliczać karty dla klientów przekraczających termin zwrotu pojazduów,
+aby egzekwowac regulamin firmy.
