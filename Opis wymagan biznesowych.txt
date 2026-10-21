@@ -1,0 +1,52 @@
+System rezerwacji pojazdów obsługuje rezerwacje i zwrot pojazdów.
+
+W systemie istnieją Klienci wypożyczający pojazdy oraz Pracownicy Obsługi potwierdzający rezerwacje i zwroty pojazdów. Każdy z osób posiada id, imię oraz nazwisko.
+
+Klient może przeglądać rejestr dostępnych pojazdów w systemie. Każdy pojazd opisany jest przez numer, markę, model, rocznik i dostępność. 
+
+Aby zarezerwować pojazd, Klient wprowadza numer Pojazdu z rejestru oraz termin, na jaki rezerwuje Pojazd.
+System automatycznie nalicza koszt rezerwacji na podstawie liczby dni i stawki dobowej. Każda Płatność składa się z id, wysokości opłaty, terminu płatności i statusu płatności.
+Po dokonaniu Płatności przez Klienta, Pracownik obsługi potwierdza rezerwację. Klient ma możliwość sprawdzenia statusu swojej rezerwacji w systemie.
+
+Klient może jednorazowo przedłużyć termin zwrotu pojazdu o tydzień, co generuje dodatkową Płatność i wymaga zatwierdzenia przez Pracownika Obsługi.
+Zwrot Pojazdu musi być potwierdzony przez Pracownika Obsługi, a Klient musi zapłacić ewentualną karę za przekroczenie terminu zwrotu. Kara ta zostaje naliczona automatycznie przez system.
+
+Pojedyncza Rezerwacja składa się z jednej lub więcej Pozycji Rezerwacji, z których każda odnosi się do konkretnego Pojazdu. Usunięcie Rezerwacji z systemu powoduje usunięcie wszystkich jego pozycji.
+
+-------------------------------------------------------------------------------------------------------------------
+User stories:
+
+Jako klient
+chcę przeglądać dostępne pojazdy,
+aby sprawdzić, czy mogę zarezerować interesujący mnie pojazd.
+Kryterium akceptacji: System zwraca rejestr dostępnych pojazdów.
+
+Jako klient
+chcę złożyć rezerwację,
+aby móc korzystać z pojazdu w wybranym przeze mnie terminie.
+Kryterium akceptacji: Tworzy się nowy obiekt rezerwacja zawierający pozycję rezerwacji powiązaną z pojazdem; jednocześnie zarezerwowany pojazd znika z listy dostępnych pojazdów i tworzy się obiekt klasy Płatność.
+
+Jako klient
+chcę sprawdzić status mojej rezerwacji,
+aby mieć pewność, że została potwierdzona.
+Kryterium akceptacji: System zwraca status rezerwacji na podstawie ID rezerwacji dostępnego dla klienta.
+
+Jako klient,
+chce mieć możliwość przedłużenia terminu zwrotu pojazdu,
+aby uniknąć kar za ich niedotrzymanie.
+Kryterium akceptacji: Wartość atrybutu terminZwrotu w instancji klasy Wypozyczenia ulega zmianie (zwiększa się o tydzień).
+
+Jako pracownik obsługi
+chcę dodać do systemu nowy pojazd,
+aby poszerzyć ofertę naszej firmy.
+Kryterium akceptacji: Nowy obiekt klasy Pojazd trafia do głównej listy systemu i jest widoczny dla klientów.
+
+Jako pracownik obsługi
+chcę móc potwierdzać opłacone rezerwacje,
+aby zapobiec rezerwacji tego samego pojazdu przez innego klienta.
+Kryterium akceptacji: Atrybut 'status' obiektu rezerwacji zmienia się na 'aktywny', a Platnosc zostaje oznaczona jako zapłacona.
+
+Jako pracownik obsługi
+chcę rejestrować zwrot sprzętu,
+aby udostępnić zwrócone pojazdy do wypożyczenia następnym klientom.
+Kryterium akceptacji: Atrybut 'status' obiektu rezerwacji zmienia się na 'nieaktywny', a zwrócony pojazd wraca na listę dostępnych pojazdów.
