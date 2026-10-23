@@ -1,0 +1,35 @@
+1. Wyświetl katalog
+
+Aktorzy: Klient, Pracownik
+Opis: Każda osoba przegląda katalog dostępnych pojazdów.
+Powiązanie z User Story: opdowiada pierwszej historii użytkownika (przeglądanie/wyświetlanie)
+
+2. Zarezerwuj pojazd
+Aktorzy: Klient
+Opis: Klient inicjuje proces rezerwacji na podstawie numeru rejestracyjnego pojazdu i okresu, na jaki chce wypożyczyć pojazd. System rejestruje
+datę rezerwacji, termin zwrotu, oblicza koszt rezerwacji i tworzy obiekt Płatność.
+Powiązanie z User Story: odpowiada drugiej historii użytkownika 
+
+3. Zatwierdź rezerwację
+Aktorzy: Pracownik
+Opis: Pracownik potwierdza Płatność i zmienia status rezerwacji i płatności.
+Powiązanie z User Story:  
+
+4. Przedłuż termin zwrotu
+Aktorzy: Klient
+Opis: Klient inicjuje proces przedłużenia terminu zwrotu na podstawie id rezerwacji, co generuje dodatkową Płatność.
+
+5. Potwierdz przedłużenie terminu zwrotu
+Aktorzy: Pracownik
+Opis: Pracownik potwierdza zapłacenie dodatkowej Płatności i jednocześnie termin zwrotu pojazdu zwiększa sie o tydzień.
+
+6. Zwróć pojazd
+Aktorzy: Pracownik
+Opis: Pracownik rejestruje zwrot pojazdu, a w przypadku przekroczenia terminu system automatycznie oblicza wysokość kary
+i tworzy nowy obiekt Płatności.
+
+7. Wyświetl rezerwację
+Aktorzy: Klient
+Opis: Klient wyświetla swoją rezerwację podając email i id rezerwacji.
+
+
