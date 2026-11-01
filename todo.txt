@@ -1,1 +1,3 @@
 - dodanie do diagramu klas klasy date
+- zmiana pola rezerwacja w klasie platnosc na idRezerwacji
+- usunięcie pola kwota z klasy rezerwacja
