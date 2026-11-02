@@ -1,5 +1,5 @@
-#ifndef PLATNOSC_HPP
-#define PLATNOSC_HPP
+#ifndef PRACOWNIK_HPP
+#define PRACOWNIK_HPP
 
 using namespace std;
 

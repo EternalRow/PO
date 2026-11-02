@@ -1,5 +1,5 @@
-#ifndef PLATNOSC_HPP
-#define PLATNOSC_HPP
+#ifndef KLIENT_HPP
+#define KLIENT_HPP
 
 using namespace std;
 

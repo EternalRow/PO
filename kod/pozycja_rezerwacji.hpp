@@ -3,14 +3,14 @@
 
 #include "pojazd.hpp"
 
-class pozycjaRezerwacji{
+class PozycjaRezerwacji{
     
     private:
         Pojazd pojazd;
 
     public:
-        pozycjaRezerwacji(const Pojazd& pojazd=Pojazd());
-        virtual ~pozycjaRezerwacji();
+        PozycjaRezerwacji(const Pojazd& pojazd=Pojazd());
+        virtual ~PozycjaRezerwacji();
 
         const Pojazd& zwrocPojazd() const;
         void ustawPojazd(const Pojazd& val);

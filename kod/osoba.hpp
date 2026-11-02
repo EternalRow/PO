@@ -1,5 +1,5 @@
-#ifndef PLATNOSC_HPP
-#define PLATNOSC_HPP
+#ifndef OSOBA_HPP
+#define OSOBA_HPP
 using namespace std;
 #include <string>
 
