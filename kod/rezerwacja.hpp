@@ -11,7 +11,7 @@ using namespace std;
 class Rezerwacja{
     private:
         int id;
-        vector<pozycjaRezerwacji> pojazdy;
+        vector<PozycjaRezerwacji> pojazdy;
         Data dataRezerwacji;
         int status;
         bool przedluzono;
@@ -19,14 +19,14 @@ class Rezerwacja{
         int idKlienta;
     
     public:
-        Rezerwacja(int id=0, const vector<pozycjaRezerwacji> pojazdy={}, const Data& dataRezerwacji=Data(), int status=0, bool przedluzono=false, const Data& terminZwrotu=Data(), int idKlienta=0);
+        Rezerwacja(int id=0, const vector<PozycjaRezerwacji> pojazdy={}, const Data& dataRezerwacji=Data(), int status=0, bool przedluzono=false, const Data& terminZwrotu=Data(), int idKlienta=0);
         virtual ~Rezerwacja();
 
         int zwrocId() const;
         void ustawId(int val);
 
-        const vector<pozycjaRezerwacji>& zwrocPojazdy() const;
-        void ustawPojazdy(const vector<pozycjaRezerwacji>& val);
+        const vector<PozycjaRezerwacji>& zwrocPojazdy() const;
+        void ustawPojazdy(const vector<PozycjaRezerwacji>& val);
 
         const Data& zwrocDateRezerwacji() const;
         void ustawDateRezerwacji(const Data& val);
@@ -42,6 +42,10 @@ class Rezerwacja{
 
         int zwrocIdKlienta() const;
         void ustawIdKlienta(int val);
+
+        void potwierdz();
+        void anuluj();
+        void przedluz();
 
 };
 
