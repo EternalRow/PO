@@ -31,7 +31,7 @@ class Pojazd{
         void ustawNrRej(const string& val);
 
         const Data& zwrocDatePrzegladu() const;
-        void ustawDatePrzegladu(const Data& val); 
+        void ustawDatePrzegladu(int dzien, int miesiac, int rok); 
 };
 
 #endif

@@ -22,13 +22,16 @@ class Platnosc{
         void ustawKwote(float val);
 
         const Data& zwrocDatePrzelewu() const;
-        void ustawDatePrzelewu(const Data& val);
+        void ustawDatePrzelewu(int dzien, int miesiac, int rok);
 
         int zwrocIdRezerwacji() const;
         void ustawIdRezerwacji(int val);
 
         int zwrocId() const;
         void ustawId(int val);
+
+        void potwierdz();
+        void anuluj();
 };
 
 #endif

@@ -15,7 +15,7 @@ class Klient : public Osoba {
         Klient(const string& imie="", const string& nazwisko="", const string& email="", int id=0);
         virtual ~Klient();
 
-        const string& wezEmail() const;
+        const string& zwrocEmail() const;
         void ustawEmail(const string& val);
 };
 

@@ -15,8 +15,8 @@ class Pracownik : public Osoba
         Pracownik(const string& imie="", const string& nazwisko="", const int id=0, const int idPracownicze=0);
         virtual ~Pracownik();
 
-        int wezIdPracownicze() const;
-        void ustawId(int val);
+        int zwrocIdPracownicze() const;
+        void ustawIdPracownicze(int val);
 };
 
 #endif
