@@ -3,3 +3,4 @@
 - usunięcie pola kwota z klasy rezerwacja
 - poprawa na diagramie wszystkich metod systemu rezerwacji (porownac zmiany kodu)
 - kiedy wywoluje sie naliczKare()?
+- czy platnosc nie powinna byc przekazywana jako element klasy rezerwacja, aby latwiej anulowac rezerwacje w przypadku anulowania platnosci?
