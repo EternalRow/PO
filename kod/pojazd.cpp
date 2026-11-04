@@ -1,4 +1,5 @@
 #include "pojazd.hpp"
+#include <iostream>
 
 
 Pojazd::Pojazd(const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu)
@@ -47,4 +48,11 @@ void Pojazd::ustawDatePrzegladu(int dzien, int miesiac, int rok){
     dataPrzegladu.ustawDzien(dzien);
     dataPrzegladu.ustawMiesiac(miesiac);
     dataPrzegladu.ustawRok(rok);
+}
+
+void Pojazd::wypisz() const {
+    cout << "Marka: " << marka << endl;
+    cout << "Model: " << model << endl;
+    cout << "Rocznik: " << rocznik << endl;
+    cout << "Data przeglądu: " << dataPrzegladu.zwrocDzien() << "." << dataPrzegladu.zwrocMiesiac() << "." << dataPrzegladu.zwrocRok() << endl;
 }
