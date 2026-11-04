@@ -10,7 +10,6 @@ using namespace std;
 #include "pracownik.hpp"
 #include <vector>
 #include <string>
-using namespace std;
 
 class SystemRezerwacji{
     private:
@@ -43,14 +42,13 @@ class SystemRezerwacji{
         const vector<Pojazd>& zwrocDostepne() const;
         void ustawDostepne(const vector<Pojazd>& val);
 
-        bool zarezerwuj(int id_osoby, string nr_pojazdu, Data data, int okres);
-        void katalog();
+        bool zarezerwuj(int id_osoby, Pojazd pojazd, Data data_wypozyczenia, Data data_zwrotu, int okres_wypozyczenia);
+        void katalog() const;
         bool dodajPojazd(Pojazd pojazd);
         void potwierdzRezerwacje(int id_platnosci);
 
         void zwrocPojazdy(int id_rezerwacji);
         void naliczKare(int id_rezerwacji);
-
 
 };
 

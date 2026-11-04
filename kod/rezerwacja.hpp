@@ -43,10 +43,6 @@ class Rezerwacja{
         int zwrocIdKlienta() const;
         void ustawIdKlienta(int val);
 
-        void potwierdz();
-        void anuluj();
-        void przedluz();
-
 };
 
 #endif

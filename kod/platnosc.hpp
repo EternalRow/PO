@@ -30,8 +30,6 @@ class Platnosc{
         int zwrocId() const;
         void ustawId(int val);
 
-        void potwierdz();
-        void anuluj();
 };
 
 #endif

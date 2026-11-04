@@ -48,12 +48,3 @@ int Platnosc::zwrocId() const{
 void Platnosc::ustawId(int val){
     id = val;
 }
-
-void Platnosc::potwierdz(){
-    ustawStatus(1);
-}
-
-void Platnosc::anuluj(){
-    ustawStatus(2);
-    // chyba trzeba zrobic aby platnosc byla w klasie rezerwacja aby latwiej anulowac rezerwacje po anulowaniu platnosci
-}
