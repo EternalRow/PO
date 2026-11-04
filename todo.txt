@@ -4,3 +4,11 @@
 - poprawa na diagramie wszystkich metod systemu rezerwacji (porownac zmiany kodu)
 - kiedy wywoluje sie naliczKare()?
 - czy platnosc nie powinna byc przekazywana jako element klasy rezerwacja, aby latwiej anulowac rezerwacje w przypadku anulowania platnosci?
+- metody potwierdz, anuluj, przedluz z klasy rezerwacja wylatują do systemu rezerwacji
+- dodac printy wyrzucające zbiórcze informacje o danej instnajci klasy?
+- dodanie metody aktualizujDostepne w systemie
+- metoda zarezerwuj w systemieRezerwacji powinna przyjmowac vector z pojazdami zamiast nr pojazdu (mozliwosc rezerwacji wielu pojazdow)
+- apropos powyższego -> pozycja rezerwacji powinna skladać się z wielu pojazdów?
+- w klasie Data nalezy stworzyc funkcje do dodawania dni do danej daty.
+- obliczanie dat skomplikowane; zarezerwuj() musi przyjmowac date wypozyczenia, zwrotu i okres wypozyczenia
+- czy do systemu rezerwacji nie powinnismy dodac wartosci dawki dobowej? aby byla latwiejsza do zmiany (aktualnie przyjeto: 200)
