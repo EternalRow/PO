@@ -1,14 +1,24 @@
-- dodanie do diagramu klas klasy date
-- zmiana pola rezerwacja w klasie platnosc na idRezerwacji
-- usunięcie pola kwota z klasy rezerwacja
-- poprawa na diagramie wszystkich metod systemu rezerwacji (porownac zmiany kodu)
-- kiedy wywoluje sie naliczKare()?
-- czy platnosc nie powinna byc przekazywana jako element klasy rezerwacja, aby latwiej anulowac rezerwacje w przypadku anulowania platnosci?
-- metody potwierdz, anuluj, przedluz z klasy rezerwacja wylatują do systemu rezerwacji
 - dodac printy wyrzucające zbiórcze informacje o danej instnajci klasy?
-- dodanie metody aktualizujDostepne w systemie
 - metoda zarezerwuj w systemieRezerwacji powinna przyjmowac vector z pojazdami zamiast nr pojazdu (mozliwosc rezerwacji wielu pojazdow)
-- apropos powyższego -> pozycja rezerwacji powinna skladać się z wielu pojazdów?
-- w klasie Data nalezy stworzyc funkcje do dodawania dni do danej daty.
-- obliczanie dat skomplikowane; zarezerwuj() musi przyjmowac date wypozyczenia, zwrotu i okres wypozyczenia
-- czy do systemu rezerwacji nie powinnismy dodac wartosci dawki dobowej? aby byla latwiejsza do zmiany (aktualnie przyjeto: 200)
+- zarezerwuj() musi przyjmowac date wypozyczenia, zwrotu i okres wypozyczenia
+-dodac od systemu pole stawka dobowa
+- funkcja w systemie zwracajaca ilosc (dlugosc wektora) platnosci, rezerwacji itp?
+- katalog() daje opcje tylko wyswietlania oraz od razu wyboru pojazdów do rezerwacji
+- w main najpierw pytanie o email
+- w rezerwacji dodajemy obiekt Klienta
+- dwie funkcje do oplacania: oplacRezerwacje i oplacDodatkowe (jedno zeby szybko oznaczyc rezerwacje jako aktywna a drugie do zamkniecia rezerwacji)
+- do rezerwacji dwa obiekty: Platnosc::oplata, Platnosc::dodatkowe
+- zwrocPojazd dodaje kare jesli cza (dodac obiekt dodatkowe typu platnosc)
+- nie zakladamy terminu platnosci w platnosci
+- niektore funkcje maja zwracac bool np dodajpojazd, oplacDodatkowe, przdedluz
+- usuwamy calkiem liste dostepnych!!!!! wypisz pojazdy wlacznie z niedostepnymi
+- kara obliczana razy ilosc aut 
+- do pojazdu dodaj pole status
+- printy wszystkiego
+- usun z Rezerwacji jakiekolwiek daty; przy ooddawaniu samochodu podajemy okres, przez jaki byl trzyamny i sprawdzamy czy przekroczono okres wypozyczenia+przedluzenie
+
+
+
+
+fanaberie:
+- dodac do rezerwacji po oddaniu samochodu okrews przez jaki byl przetrzymywany
