@@ -14,8 +14,6 @@
 - printy wszystkiego
 
 
-- usun z Rezerwacji jakiekolwiek daty; przy ooddawaniu samochodu podajemy okres, przez jaki byl trzyamny i sprawdzamy czy przekroczono okres wypozyczenia+przedluzenie
-- dodac funkcje wyswietlRezerwacje dzieki ktorej mozna wykonywac reszte akcji na rezerwacji (patrz: diagram przypadkow uzycia)
 
 
 fanaberie:
