@@ -2,8 +2,8 @@
 #include <iostream>
 
 
-Pojazd::Pojazd(const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu)
-    : marka(marka), model(model), rocznik(rocznik), nrRej(nrRej), dataPrzegladu(dataPrzegladu) {}
+Pojazd::Pojazd(const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu, bool status)
+    : marka(marka), model(model), rocznik(rocznik), nrRej(nrRej), dataPrzegladu(dataPrzegladu), status(status) {}
 
 Pojazd::~Pojazd() = default;
 
@@ -44,6 +44,14 @@ const Data& Pojazd::zwrocDatePrzegladu() const{
     return dataPrzegladu;
 }
 
+bool Pojazd::zwrocStatus() const{
+    return status;
+}
+
+void Pojazd::ustawStatus(bool val){
+    status = val;
+}
+
 void Pojazd::ustawDatePrzegladu(int dzien, int miesiac, int rok){
     dataPrzegladu.ustawDzien(dzien);
     dataPrzegladu.ustawMiesiac(miesiac);
@@ -51,8 +59,8 @@ void Pojazd::ustawDatePrzegladu(int dzien, int miesiac, int rok){
 }
 
 void Pojazd::wypisz() const {
-    cout << "Marka: " << marka << endl;
-    cout << "Model: " << model << endl;
-    cout << "Rocznik: " << rocznik << endl;
-    cout << "Data przeglądu: " << dataPrzegladu.zwrocDzien() << "." << dataPrzegladu.zwrocMiesiac() << "." << dataPrzegladu.zwrocRok() << endl;
+    if (status == 0){
+        cout << "[NIEDOSTĘPNY] ";
+    }
+    cout << "Marka: " << marka << "; model: " << model <<"; rocznik: " << rocznik << endl;
 }

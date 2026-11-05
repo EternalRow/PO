@@ -4,8 +4,9 @@
 using namespace std;
 
 #include "data.hpp"
+#include "platnosc.hpp"
+#include "klient.hpp"
 #include <vector>
-using namespace std;
 #include "pozycja_rezerwacji.hpp"
 
 class Rezerwacja{
@@ -15,11 +16,13 @@ class Rezerwacja{
         Data dataRezerwacji;
         int status;
         bool przedluzono;
-        Data terminZwrotu;
-        int idKlienta;
+        int okresWypozyczenia;
+        Klient klient;
+        Platnosc oplataRezerwacji;
+        Platnosc oplataDodatkowa;
     
     public:
-        Rezerwacja(int id=0, const vector<PozycjaRezerwacji> pojazdy={}, const Data& dataRezerwacji=Data(), int status=0, bool przedluzono=false, const Data& terminZwrotu=Data(), int idKlienta=0);
+        Rezerwacja(int id=0, const vector<PozycjaRezerwacji> pojazdy={}, const Data& dataRezerwacji=Data(), int status=0, bool przedluzono=false, int okres_wypozyczenia=0, const Klient& klient=Klient(), const Platnosc& oplata_rezerwacji=Platnosc(), const Platnosc& oplata_dodatkowa=Platnosc());
         virtual ~Rezerwacja();
 
         int zwrocId() const;
@@ -37,11 +40,17 @@ class Rezerwacja{
         bool zwrocPrzedluzono() const;
         void ustawPrzedluzono(bool val);
 
-        const Data& zwrocTerminZwrotu() const;
-        void ustawTerminZwrotu(const Data& val);
+        int zwrocOkresWypozyczenia() const;
+        void ustawOkresWypozyczenia(int val);
 
-        int zwrocIdKlienta() const;
-        void ustawIdKlienta(int val);
+        const Klient& zwrocKlienta() const;
+        void ustawKlienta(const Klient& val);
+
+        const Platnosc& zwrocOplateRezerwacji() const;
+        void ustawOplateRezerwacji(const Platnosc& val);
+
+        const Platnosc& zwrocOplateDodatkowa() const;
+        void ustawOplateDodatkowa(const Platnosc& val);
 
 };
 

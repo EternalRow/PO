@@ -1,7 +1,7 @@
 #include "rezerwacja.hpp"
 
-Rezerwacja::Rezerwacja(int id, const vector<PozycjaRezerwacji> pojazdy, const Data& dataRezerwacji, int status, bool przedluzono, const Data& terminZwrotu, int idKlienta)
-    : id(id), pojazdy(pojazdy), dataRezerwacji(dataRezerwacji), status(status), przedluzono(przedluzono), terminZwrotu(terminZwrotu), idKlienta(idKlienta) {}
+Rezerwacja::Rezerwacja(int id, const vector<PozycjaRezerwacji> pojazdy, const Data& dataRezerwacji, int status, bool przedluzono, int okresWypozyczenia, const Klient& klient, const Platnosc& oplataRezerwacji, const Platnosc& oplataDodatkowa)
+    : id(id), pojazdy(pojazdy), dataRezerwacji(dataRezerwacji), status(status), przedluzono(przedluzono), okresWypozyczenia(okresWypozyczenia), klient(klient), oplataRezerwacji(oplataRezerwacji), oplataDodatkowa(oplataDodatkowa) {}
 
 Rezerwacja::~Rezerwacja() = default;
 
@@ -45,19 +45,35 @@ void Rezerwacja::ustawPrzedluzono(bool val){
     przedluzono = val;
 }
 
-const Data& Rezerwacja::zwrocTerminZwrotu() const {
-    return terminZwrotu;
+int Rezerwacja::zwrocOkresWypozyczenia() const {
+    return okresWypozyczenia;
 }
 
-void Rezerwacja::ustawTerminZwrotu(const Data& val){
-    terminZwrotu = val;
+void Rezerwacja::ustawOkresWypozyczenia(int val){
+    okresWypozyczenia = val;
 }
 
-int Rezerwacja::zwrocIdKlienta() const{
-    return idKlienta;
+const Klient& Rezerwacja::zwrocKlienta() const{
+    return klient;
 }
 
-void Rezerwacja::ustawIdKlienta(int val){
-    idKlienta = val;
+void Rezerwacja::ustawKlienta(const Klient& val){
+    klient = val;
 }
+
+const Platnosc& Rezerwacja::zwrocOplateRezerwacji() const{
+    return oplataRezerwacji;
+}
+
+void Rezerwacja::ustawOplateRezerwacji(const Platnosc& val){
+    oplataRezerwacji = val;
+}
+const Platnosc& Rezerwacja::zwrocOplateDodatkowa() const{
+    return oplataDodatkowa;
+}
+
+void Rezerwacja::ustawOplateDodatkowa(const Platnosc& val){
+    oplataDodatkowa = val;
+}
+
 

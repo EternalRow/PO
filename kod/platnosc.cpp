@@ -1,8 +1,8 @@
 #include "platnosc.hpp"
 
 
-Platnosc::Platnosc(const Data& dataPrzelewu, float kwota, int status, int idRezerwacji, int id)
-    : kwota(kwota), status(status), dataPrzelewu(dataPrzelewu), idRezerwacji(idRezerwacji), id(id)  {}
+Platnosc::Platnosc(float kwota, int status, const Data& dataPrzelewu, int id)
+    : kwota(kwota), status(status), dataPrzelewu(dataPrzelewu), id(id)  {}
 
 Platnosc::~Platnosc() = default;
 
@@ -31,14 +31,6 @@ int Platnosc::zwrocStatus() const{
 
 void Platnosc::ustawStatus(int val){
     status = val;
-}
-
-int Platnosc::zwrocIdRezerwacji() const{
-    return idRezerwacji;
-}
-
-void Platnosc::ustawIdRezerwacji(int val){
-    idRezerwacji = val;
 }
 
 int Platnosc::zwrocId() const{

@@ -8,11 +8,10 @@ class Platnosc{
         float kwota;
         int status;
         Data dataPrzelewu;
-        int idRezerwacji;
         int id;
     
     public:
-        Platnosc(const Data& dataPrzelewu=Data(), float kwota=0.0, int status=0, int idRezerwacji=0, int id=0);
+        Platnosc(float kwota=0.0, int status=0, const Data& dataPrzelewu=Data(), int id=0);
         virtual ~Platnosc();
 
         int zwrocStatus() const;
@@ -23,9 +22,6 @@ class Platnosc{
 
         const Data& zwrocDatePrzelewu() const;
         void ustawDatePrzelewu(int dzien, int miesiac, int rok);
-
-        int zwrocIdRezerwacji() const;
-        void ustawIdRezerwacji(int val);
 
         int zwrocId() const;
         void ustawId(int val);
