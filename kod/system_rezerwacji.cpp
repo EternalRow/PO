@@ -59,23 +59,20 @@ void SystemRezerwacji::ustawRezerwacje(const vector<Rezerwacja>& val){
 
 
 const Rezerwacja& SystemRezerwacji::zarezerwuj(Klient& klient, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia){
-    /*int id_rezerwacji = rezerwacje.size()+1;
+    int id_rez = rezerwacje.size()+1;
+    int id_plat = platnosci.size()+1;
+    vector<PozycjaRezerwacji> wektor_pozycji;
+    for (int i=0;i<pojazdy.size();i++){
+        wektor_pozycji.push_back(PozycjaRezerwacji(pojazdy[i]));
+    }
+    float kwota = stawkaDobowa*okres_wypozyczenia;
+    Platnosc oplata = Platnosc(kwota, 0, Data(0,0,0), id_plat);
+    Rezerwacja rez = Rezerwacja(id_rez, wektor_pozycji,  data_wypozyczenia, 0, 0, okres_wypozyczenia, klient, oplata); //czy zrobi sie domyslnie platnosc dodatkowa?
     
-    vector<PozycjaRezerwacji> pozycja;
-    pozycja.push_back(PozycjaRezerwacji(pojazd));
-    Rezerwacja nowa_rezerwacja = Rezerwacja(id_rezerwacji, pozycja, data_wypozyczenia, 0, 0, data_zwrotu, id_osoby);
-    rezerwacje.push_back(nowa_rezerwacja);
+    rezerwacje.push_back(rez);
+    platnosci.push_back(oplata);
 
-    float kwota = 200*okres_wypozyczenia;
-    const Data data_przelewu = Data(0,0,0);
-    int id_platnosci = platnosci.size()+1;
-    Platnosc nowa_platnosc = Platnosc(data_przelewu, kwota, 0, id_rezerwacji, id_platnosci);
-    platnosci.push_back(nowa_platnosc);
-
-    //dostepne.erase(find(dostepne.begin(), dostepne.end(), pojazd)); // usuniecie pojazdu z dostepnych
-    //czy nie powinno zwracac do maina platnosci i rezerwacji?
-    return 0;*/
-    return 0;
+    return rezerwacje.back();
 
 }
 
@@ -168,6 +165,14 @@ bool SystemRezerwacji::przedluz(Rezerwacja& rezerwacja){
 
 bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
     int okres_planowo = rezerwacja.zwrocOkresWypozyczenia();
+
+    //zwrocenie pojazdom dostepnosci
+    vector<PozycjaRezerwacji> pozycje_rezerwacji = rezerwacja.zwrocPojazdy();
+    for (int i=0;i<pozycje_rezerwacji.size();i++){
+        Pojazd oddany_pojazd = pozycje_rezerwacji[i].zwrocPojazd();
+        oddany_pojazd.ustawStatus(0);
+    }
+
     if (rezerwacja.zwrocPrzedluzono() == 1){
         okres_planowo += 7;
     }
@@ -178,6 +183,10 @@ bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
         float kwota_za_przedluzenie = 7*stawkaDobowa;
         int id = platnosci.size()+1;
         Platnosc dodatkowa = Platnosc(kwota_za_przedluzenie, 0, Data(0,0,0), id);
+        
+        platnosci.push_back(dodatkowa);
+        rezerwacja.ustawStatus(2);
+
         return 0;
     }
     else{ // kara za przetrzymanie samochodu ponad termin zwrotu
@@ -185,14 +194,22 @@ bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
         float wysokosc = (iloscDni-okres_planowo) * lista_zwracanych.size() * kara;
         int id = platnosci.size()+1;
         Platnosc dodatkowa_kara = Platnosc(wysokosc, 0, Data(0,0,0), id);
+        
         platnosci.push_back(dodatkowa_kara);
+        rezerwacja.ustawStatus(2);
+
         return 0;
     }
 }
 
 bool SystemRezerwacji::zakonczRezerwacje(Rezerwacja& rezerwacja){
-    //todo
-    return 0;
+    Platnosc dodatkowa = rezerwacja.zwrocOplateDodatkowa();
+    if (dodatkowa.zwrocKwote() == 0.0 || (dodatkowa.zwrocKwote() != 0 && dodatkowa.zwrocStatus()==1)){ //platnosci dodatkowej nie ma lub ozstala juz zaplacona
+        rezerwacja.ustawStatus(3); //rezerwacja zamknieta
+        return 0;
+    }else{
+        return 1; //nie mozna zamknac
+    }
 }
 
 void SystemRezerwacji::dodajKlienta(Klient& val){
