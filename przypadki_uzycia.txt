@@ -2,7 +2,7 @@
 
 Aktorzy: Klient, Pracownik
 Opis: Każda osoba przegląda katalog dostępnych pojazdów.
-Powiązanie z User Story: opdowiada pierwszej historii użytkownika (przeglądanie/wyświetlanie)
+Powiązanie z User Story: odpowiada pierwszej historii użytkownika (przeglądanie/wyświetlanie)
 
 2. Zarezerwuj pojazd
 Aktorzy: Klient
@@ -12,26 +12,29 @@ Powiązanie z User Story: odpowiada drugiej historii użytkownika
 
 3. Opłać rezerwację
 Aktorzy: Klient
-Opis: klient wysyła przelew na konto bankowe, a system po potwierdzeniu, zmienia status płatności i rezerwacji
-Powiązanie z User Story:  
+Opis: klient wysyła przelew na konto bankowe, a system po potwierdzeniu, zmienia status płatności i rezerwacji 
 
 4. Przedłuż termin zwrotu
 Aktorzy: Klient
 Opis: Klient inicjuje proces przedłużenia terminu zwrotu na podstawie id rezerwacji, co generuje dodatkową Płatność.
+Powiązanie z User Story: odpowiada czwartej historii użytkownika (logika biznesowa/tworzenie).
 
 5. Zakończ rezerwację
 Aktorzy: Pracownik
 Opis: Pracownik potwierdza zapłacenie ewentualnych kar i przedłużeń i zmienia status rezerwacji na zakończoną
+Powiązanie z User Story: poniekąd odpowiada przedostatniej historii użytkownika (operacja administracyjna).
 
 6. Zwróć pojazd
 Aktorzy: Pracownik
-Opis: Pracownik rejestruje zwrot pojazdu, a w przypadku przekroczenia terminu system automatycznie oblicza wysokość kary
+Opis: Pracownik rejestruje zwrot pojazdu i zmienia jego status, a w przypadku przekroczenia terminu system automatycznie oblicza wysokość kary
 i tworzy nowy obiekt Płatności.
+Powiązanie z User Story: odpowiada ostatniej historii użytkownika (zarządcza, logika biznesowa).
 
 7. Wyświetl rezerwację
 Aktorzy: Klient, Pracownik
 Opis: Klient wyświetla swoją rezerwację podając email i id rezerwacji.
+Powiązanie z User Story: odpowiada trzeciej historii użytkownika (przeglądanie).
 
 8. Opłać dodatki
 Aktorzy: Klient
-Opis: Po zakończeniu rezerwacji klient opłaca ew. kary i przedłużenia i zmienia status Płatności na opłacone
+Opis: Po zakończeniu rezerwacji klient opłaca ew. kary i przedłużenia, a status Płatności zmienia się na opłacone.
