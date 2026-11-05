@@ -1,3 +1,9 @@
+/*
+Status pojazdu
+0 - niedostepny
+1 - dostepny
+*/
+
 #include "pojazd.hpp"
 #include <iostream>
 

@@ -52,6 +52,8 @@ class Rezerwacja{
         const Platnosc& zwrocOplateDodatkowa() const;
         void ustawOplateDodatkowa(const Platnosc& val);
 
+        //funkcja do wyswietlenia rezerwacji i zarzadzania nią -> tu czy w systemie?
+
 };
 
 #endif

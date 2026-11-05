@@ -1,3 +1,11 @@
+/*
+Oznaczenia statusu rezeerwacji:
+0 - niezaplacone; nieaktywna
+1 - aktywna, oplacona;
+2 - zwrocono pojazdy, nieoplacono platnosci dodatkowej
+3 - rezerwacja zamknięta;
+*/
+
 #include "rezerwacja.hpp"
 
 Rezerwacja::Rezerwacja(int id, const vector<PozycjaRezerwacji> pojazdy, const Data& dataRezerwacji, int status, bool przedluzono, int okresWypozyczenia, const Klient& klient, const Platnosc& oplataRezerwacji, const Platnosc& oplataDodatkowa)
