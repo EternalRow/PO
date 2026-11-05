@@ -1,0 +1,28 @@
+1. Powiązany przypadek użycia:
+
+Nazwa: Zarezerwuj Pojazd
+
+Aktor: Klient.
+
+2. Cel operacji:
+
+Diagram przedstawia dynamiczny scenariusz realizacji stworzenie obiektów Płatność oraz Rezerwacja po zweryfikowania intencji użtykownika i dostępności Pojazdu
+
+3. Przebieg interakcji (Krok po kroku):
+
+Przegląd Pojazdów: Klient wywołuje funkcję katalog, która wyświetla dostępne Pojazdy oraz pyta klienta o podanie liczby pojazdów do wypożyczenia (<1 wychodzi z katalogu)
+
+Ścieżka alternatywna (Wyjście z katalogu): użytkownik inicjuje wyjście z katalogu i zakończenie procesu rezerwacji
+
+Inicjacja: Czytelnik wywołuje metodę zarezerwuj(klient: Klient, pojazdy: list<Pojazd>, data_wypozyczenia: date, okres_wypozyczenia: int ) skierowaną bezpośrednio do obiektu sterującego systemu (SystemRezerwacji).
+
+Weryfikacja zasobu: System odpytuje obiekty :Pojazd za pomocą metody sprawdz_status(). W odpowiedzi otrzymuje flagę logiczną typu bool (dostepna).
+
+Ścieżka alternatywna (Pojazdy niedostępne): Jeśli któryś z pojazdów jest niedostępny (false), proces zostaje przerwany, a system zwraca do klienta komunikat o niepowodzeniu (potwierdzenie : bool (false)).
+
+Zmiana statusu pojazdów: System zmienia statusy Pojazdów za pomocą funkcji zmien_status(false), przez co nie będą już one dostępne do wyboru dla innych użytkowników dopóki obiekt rezerwacja jest aktywny
+
+Utworzenie Płatności i Rezerwacji: System tworzy obiekty Płatność oraz Rezerwacji z podanymi parametrami oraz wartościami obliczanymi automatycznie. Te obiekty będą czekać na funkcję oplacRezerwacje(Rezerwacja), która zmieni ich status na aktywne
+
+Potwierdzenie: Na zakończenie proces zwraca do aktora pozytywną flagę sukcesu (potwierdzenie : bool (true)).
+
