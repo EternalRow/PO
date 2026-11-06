@@ -1,17 +1,9 @@
 - dodac printy wyrzucające zbiórcze informacje o danej instnajci klasy?
-
--dodac od systemu pole stawka dobowa
-- funkcja w systemie zwracajaca ilosc (dlugosc wektora) platnosci, rezerwacji itp?
-- katalog() daje opcje tylko wyswietlania oraz od razu wyboru pojazdów do rezerwacji
-- w main najpierw pytanie o email
-
-- zwrocPojazd dodaje kare jesli cza (dodac obiekt dodatkowe typu platnosc)
-- nie zakladamy terminu platnosci w platnosci
-
-
+- funkcja zwracajaca ilosc (dlugosc wektora) platnosci, rezerwacji itp?
+-dodac do diagramu klas pole kara: float w systemie rezerwacji
 - kara obliczana razy ilosc aut 
-
-- printy wszystkiego
+- platnosc razy ilosc aut
+- !!!!!!!!!!przeniesc funkcjonalnosc niektorych metod systemu do rezerwacji/platnosci/pojazdu
 
 
 
