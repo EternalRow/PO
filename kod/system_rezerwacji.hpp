@@ -62,9 +62,6 @@ class SystemRezerwacji{
         void dodajPlatnosc(Platnosc& val);
         void dodajRezerwacje(Rezerwacja& val);
         void dodajPracownika(Pracownik& val);
-        
-
-
 
 };
 
