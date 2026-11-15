@@ -65,14 +65,14 @@ const Rezerwacja& SystemRezerwacji::zarezerwuj(Klient& klient, vector<Pojazd>& p
     for (int i=0;i<pojazdy.size();i++){
         wektor_pozycji.push_back(PozycjaRezerwacji(pojazdy[i]));
     }
-    float kwota = stawkaDobowa*okres_wypozyczenia;
+    float kwota = stawkaDobowa*okres_wypozyczenia*wektor_pozycji.size();
     Platnosc oplata = Platnosc(kwota, 0, Data(0,0,0), id_plat);
-    Rezerwacja rez = Rezerwacja(id_rez, wektor_pozycji,  data_wypozyczenia, 0, 0, okres_wypozyczenia, klient, oplata); //czy zrobi sie domyslnie platnosc dodatkowa?
+    Rezerwacja rez = Rezerwacja(id_rez, wektor_pozycji,  data_wypozyczenia, 0, 0, okres_wypozyczenia, klient, oplata); //domyslnie platnosc dodatkowa?
     
     rezerwacje.push_back(rez);
     platnosci.push_back(oplata);
 
-    return rezerwacje.back();
+    return rezerwacje.back(); //ostatni element z listy rezerwacji (nowo dodany)
 
 }
 
@@ -87,7 +87,7 @@ void SystemRezerwacji::katalog(){
     cout << "Wpisz 1 aby rozpocząć proces rezerwacji, lub cokolwiek aby wyjść." << endl;
     cin >> opcja;
 
-    //przeniesc ponizsze opcje do zarezerwuj()?
+    //przeniesc ponizsze opcje do MENU
     if (opcja == 1){
         string email;
         cout << "Podaj email:" << endl;
@@ -111,10 +111,10 @@ void SystemRezerwacji::katalog(){
             if (id_pojazdu == 0){
                 break;
             }else{
-                if (pojazdy[id_pojazdu-1].zwrocStatus() == 0){  //dlaczego krzycyz błąd???
+                if (pojazdy[id_pojazdu-1].zwrocStatus() == 0){
                     cout << "Pojazd niedostępny." << endl;
                 }else{
-                    pojazdy_do_rezerwacji.push_back(pojazdy[id_pojazdu-1]);
+                    pojazdy_do_rezerwacji.push_back(pojazdy[id_pojazdu-1]);  //zamiast teog możemy uzyc dodajPojazd w menu
                 }
             }
         }
@@ -122,7 +122,7 @@ void SystemRezerwacji::katalog(){
             cout << "Nie wybrano samochodów; zamknięto katalog." << endl;
             return;
         }
-        cout << "Podaj datę wypożyczenia (odbioru) w formacie DD.MM.RRRR, np. 01.04.2027" << endl;
+        cout << "Podaj datę wypożyczenia (odbioru) w formacie DD.MM.RRRR, np. 01.04.2027" << endl; //NAPRAW!!!!!!!!!!!!!!!!!
         int d, m, r;
         string kropka;
         cin >> d >> kropka >> m >> kropka >> r;
@@ -133,29 +133,25 @@ void SystemRezerwacji::katalog(){
         cin >> okres;
 
         Rezerwacja nowa_rez = zarezerwuj(klient_rezerwujacy, pojazdy_do_rezerwacji, data, okres);
+        dodajRezerwacje(nowa_rez);
 
     }else{
         return;
     }
 }
 
-bool SystemRezerwacji::dodajPojazd(const Pojazd& val){
+bool SystemRezerwacji::dodajPojazd(const Pojazd& val){  // dodaje instancję obiektu Pojazd do katalogu pojazdów w systemie
     pojazdy.push_back(val);
     return 0;
 }
 
-bool SystemRezerwacji::oplacRezerwacje(Rezerwacja& rezerwacja){
-    Platnosc platnosc = rezerwacja.zwrocOplateRezerwacji();
-    platnosc.ustawStatus(1);
-    rezerwacja.ustawStatus(1); // automatyczne ustawienie statusu rezerwacji na aktywny
-    return 0;
+bool SystemRezerwacji::oplacRezerwacje(Rezerwacja& rezerwacja){ ///jako argument data platnosci?????
+    return rezerwacja.oplacRezerwacje(); //0-oplacono, 1-bylo juz wczesniej oplacone
 
 }
 
-bool SystemRezerwacji::oplacDodatkowe(Rezerwacja& rezerwacja){
-    Platnosc platnosc = rezerwacja.zwrocOplateDodatkowa();
-    platnosc.ustawStatus(1);
-    return zakonczRezerwacje(rezerwacja); // autoamtyczna proba zamknięcia rezerwacji
+bool SystemRezerwacji::oplacDodatkowe(Rezerwacja& rezerwacja){ ///jako argument data platnosci?????
+    rezerwacja.oplacDodatkowe() == 0;  //0-oplacono, 1-bylo juz wczesniej oplacone lub brak platnosci dodatkowej
 }
 
 bool SystemRezerwacji::przedluz(Rezerwacja& rezerwacja){
@@ -169,7 +165,7 @@ bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
     //zwrocenie pojazdom dostepnosci
     vector<PozycjaRezerwacji> pozycje_rezerwacji = rezerwacja.zwrocPojazdy();
     for (int i=0;i<pozycje_rezerwacji.size();i++){
-        Pojazd oddany_pojazd = pozycje_rezerwacji[i].zwrocPojazd();
+        Pojazd oddany_pojazd = pozycje_rezerwacji[i].zwrocPojazd(); //!!!!!!!!!!!!!czy dziala czy robi to przez referencje
         oddany_pojazd.ustawStatus(0);
     }
 
@@ -178,37 +174,30 @@ bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
     }
     
     if (iloscDni <= okres_planowo && rezerwacja.zwrocPrzedluzono() == 0){
-        return zakonczRezerwacje(rezerwacja); // brak dodatkowych platnosci -> proba zakoczenia rezerwacji
+        return rezerwacja.zakoncz(); // brak dodatkowych platnosci -> proba zakonczenia (0-udana,1-nieudana)
+        // jak rozroznic zwrocona wartosc funkcji na "pomyslnie oddano" i "oddano i zakonczono"? -> main?
+
     }else if(iloscDni <= okres_planowo && rezerwacja.zwrocPrzedluzono() == 1){
-        float kwota_za_przedluzenie = 7*stawkaDobowa;
-        int id = platnosci.size()+1;
+        float kwota_za_przedluzenie = 7*stawkaDobowa*pozycje_rezerwacji.size();
+        int id = platnosci.size()+1; //!!!!!!!!+10 dla pewnosci?
         Platnosc dodatkowa = Platnosc(kwota_za_przedluzenie, 0, Data(0,0,0), id);
+        rezerwacja.ustawOplateDodatkowa(dodatkowa);
         
         platnosci.push_back(dodatkowa);
         rezerwacja.ustawStatus(2);
-
         return 0;
     }
     else{ // kara za przetrzymanie samochodu ponad termin zwrotu
         vector<PozycjaRezerwacji> lista_zwracanych = rezerwacja.zwrocPojazdy();
-        float wysokosc = (iloscDni-okres_planowo) * lista_zwracanych.size() * kara;
+        float wysokosc_kary = (iloscDni-okres_planowo) * lista_zwracanych.size() * kara;
         int id = platnosci.size()+1;
-        Platnosc dodatkowa_kara = Platnosc(wysokosc, 0, Data(0,0,0), id);
+        Platnosc dodatkowa_kara = Platnosc(wysokosc_kary, 0, Data(0,0,0), id);
+        rezerwacja.ustawOplateDodatkowa(dodatkowa_kara);
         
         platnosci.push_back(dodatkowa_kara);
         rezerwacja.ustawStatus(2);
 
         return 0;
-    }
-}
-
-bool SystemRezerwacji::zakonczRezerwacje(Rezerwacja& rezerwacja){
-    Platnosc dodatkowa = rezerwacja.zwrocOplateDodatkowa();
-    if (dodatkowa.zwrocKwote() == 0.0 || (dodatkowa.zwrocKwote() != 0 && dodatkowa.zwrocStatus()==1)){ //platnosci dodatkowej nie ma lub ozstala juz zaplacona
-        rezerwacja.ustawStatus(3); //rezerwacja zamknieta
-        return 0;
-    }else{
-        return 1; //nie mozna zamknac
     }
 }
 
