@@ -30,3 +30,8 @@ void Data::ustawRok(int val){
     rok = val;
 }
 
+void Data::wypisz(){
+    cout << dzien << "." << miesiac << "." << rok;
+    return;
+}
+

@@ -2,6 +2,8 @@
 #define PLATNOSC_HPP
 
 #include "data.hpp"
+#include <iostream>
+using namespace std;
 
 class Platnosc{
     private:
@@ -25,6 +27,8 @@ class Platnosc{
 
         int zwrocId() const;
         void ustawId(int val);
+
+        void wypiszDane();
 
 };
 

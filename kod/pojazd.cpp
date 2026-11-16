@@ -68,5 +68,5 @@ void Pojazd::wypisz() const {
     if (status == 0){
         cout << "[NIEDOSTĘPNY] ";
     }
-    cout << "Marka: " << marka << "; model: " << model <<"; rocznik: " << rocznik << endl;
+    cout << "Marka: " << marka << " Model: " << model <<" Rocznik: " << rocznik << endl;
 }

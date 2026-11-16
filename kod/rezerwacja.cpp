@@ -114,3 +114,30 @@ bool Rezerwacja::zakoncz(){
     }
     return 1;
 }
+
+void Rezerwacja::wypiszDane(){
+    cout << endl << "ID rezerwacji: " << id << endl;
+    cout << "ID klienta: " << klient.zwrocId() << endl;
+    cout << "Ilość wypożyczonych pojazdów: " << pojazdy.size() << endl;
+    cout << "Data rezerwacji: ";
+    dataRezerwacji.wypisz();
+    cout << endl << "Czy przedłużono: ";
+    if (przedluzono==0){
+        cout << "nie" << endl;
+    }else{
+        cout << "tak" << endl;
+    }
+    cout << "Okres wypożyczenia w dniach: " << okresWypozyczenia << endl;
+    cout << "Status rezerwacji: ";
+    if(status == 0){
+        cout << " nieaktywna" << endl;
+    }else if(status==1){
+        cout << " aktywna" << endl;
+    }else if(status==2){
+        cout << " zwrócono pojazdy" << endl;
+    }else if(status==3){
+        cout << " zamknięta" << endl;
+    }
+
+    return;
+}

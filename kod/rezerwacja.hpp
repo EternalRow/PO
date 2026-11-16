@@ -56,6 +56,8 @@ class Rezerwacja{
         bool oplacDodatkowe();
         bool zakoncz();
 
+        void wypiszDane();
+
         //funkcja do wyswietlenia rezerwacji i zarzadzania nią -> tu czy w systemie?
 
 };

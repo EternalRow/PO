@@ -48,20 +48,28 @@ class SystemRezerwacji{
 
         const Rezerwacja& zarezerwuj(Klient& klient, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia);
         void katalog();
-        bool dodajPojazd(const Pojazd& pojazd);
+        
 
         bool oplacRezerwacje(Rezerwacja& rezerwacja);
         bool oplacDodatkowe(Rezerwacja& rezerwacja);
 
         bool przedluz(Rezerwacja& rezerwacja);
 
-        bool zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni);
-        bool zakonczRezerwacje(Rezerwacja& rezerwacja);
+        bool zarejestrujZwrotPojazdu(Rezerwacja& rezerwacja, int iloscDni);
+        // bool zakonczRezerwacje(Rezerwacja& rezerwacja);
 
-        void dodajKlienta(Klient& val);
+        Rezerwacja zwrocWybranaRezerwacje(int id);
+
+        void dodajPojazd(string marka, string model, int rocznik, string nrRej, Data dataPrzegladu, int status);
+        void dodajKlienta(string imie, string nazwisko, string email, int id);
         void dodajPlatnosc(Platnosc& val);
         void dodajRezerwacje(Rezerwacja& val);
         void dodajPracownika(Pracownik& val);
+
+        void wypiszKlienci();
+        void wypiszPlatnosci();
+        void wypiszPracownicy();
+        void wypiszRezerwacje();
 
 };
 

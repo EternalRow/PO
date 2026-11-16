@@ -1,6 +1,9 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
+using namespace std;
+#include <iostream>
+
 class Data{
     private:
         int dzien;
@@ -17,6 +20,8 @@ class Data{
         void ustawMiesiac(int val);
         int zwrocRok() const;
         void ustawRok(int val);
+
+        void wypisz();
 };
 
 #endif

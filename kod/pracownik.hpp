@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <string>
+#include <iostream>
 #include "osoba.hpp"
 
 class Pracownik : public Osoba
@@ -17,6 +18,8 @@ class Pracownik : public Osoba
 
         int zwrocIdPracownicze() const;
         void ustawIdPracownicze(int val);
+
+        void wypiszDane();
 };
 
 #endif

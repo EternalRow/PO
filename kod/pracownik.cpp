@@ -13,3 +13,10 @@ int Pracownik::zwrocIdPracownicze() const {
 void Pracownik::ustawIdPracownicze(int val){
     idPracownicze = val;
 }
+
+void Pracownik::wypiszDane(){
+    cout << "ID pracownicze: " << idPracownicze
+    << "; Imię: " << imie
+    << "; Nazwisko: " << nazwisko << endl;
+    return;
+}

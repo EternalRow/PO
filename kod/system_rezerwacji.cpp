@@ -57,7 +57,6 @@ void SystemRezerwacji::ustawRezerwacje(const vector<Rezerwacja>& val){
     rezerwacje = val;
 }
 
-
 const Rezerwacja& SystemRezerwacji::zarezerwuj(Klient& klient, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia){
     int id_rez = rezerwacje.size()+1;
     int id_plat = platnosci.size()+1;
@@ -82,67 +81,13 @@ void SystemRezerwacji::katalog(){
         cout << i+1 << ". ";
         pojazdy[i].wypisz();
     }
-
-    int opcja;
-    cout << "Wpisz 1 aby rozpocząć proces rezerwacji, lub cokolwiek aby wyjść." << endl;
-    cin >> opcja;
-
-    //przeniesc ponizsze opcje do MENU
-    if (opcja == 1){
-        string email;
-        cout << "Podaj email:" << endl;
-        cin >> email;
-        Klient klient_rezerwujacy;
-        for(int i=0;i<klienci.size();i++){
-            if(klienci[i].zwrocEmail() == email){
-                klient_rezerwujacy = klienci[i];
-                break;
-            }else if (i+1==klienci.size()){
-                cout << "Niepoprawny email." << endl;
-                return;
-            }
-        }
-
-        vector<Pojazd> pojazdy_do_rezerwacji;
-        int id_pojazdu;
-        while (true){
-            cout << "Podaj numer samochodu do rezerwacji lub wpisz 0, aby zakończyć: ";
-            cin >> id_pojazdu;
-            if (id_pojazdu == 0){
-                break;
-            }else{
-                if (pojazdy[id_pojazdu-1].zwrocStatus() == 0){
-                    cout << "Pojazd niedostępny." << endl;
-                }else{
-                    pojazdy_do_rezerwacji.push_back(pojazdy[id_pojazdu-1]);  //zamiast teog możemy uzyc dodajPojazd w menu
-                }
-            }
-        }
-        if(pojazdy_do_rezerwacji.size() == 0){
-            cout << "Nie wybrano samochodów; zamknięto katalog." << endl;
-            return;
-        }
-        cout << "Podaj datę wypożyczenia (odbioru) w formacie DD.MM.RRRR, np. 01.04.2027" << endl; //NAPRAW!!!!!!!!!!!!!!!!!
-        int d, m, r;
-        string kropka;
-        cin >> d >> kropka >> m >> kropka >> r;
-        Data data = Data(d,m,r);
-
-        int okres;
-        cout << "Podaj okres wypożyczenia w dniach:" << endl;
-        cin >> okres;
-
-        Rezerwacja nowa_rez = zarezerwuj(klient_rezerwujacy, pojazdy_do_rezerwacji, data, okres);
-        dodajRezerwacje(nowa_rez);
-
-    }else{
-        return;
-    }
+    return;
 }
 
-bool SystemRezerwacji::dodajPojazd(const Pojazd& val){  // dodaje instancję obiektu Pojazd do katalogu pojazdów w systemie
-    pojazdy.push_back(val);
-    return 0;
+void SystemRezerwacji::dodajPojazd(string marka, string model, int rocznik, string nrRej, Data dataPrzegladu, int status){  // dodaje instancję obiektu Pojazd do katalogu pojazdów w systemie
+    Pojazd nowy_pojazd = Pojazd(marka, model, rocznik, nrRej, dataPrzegladu, status);
+    pojazdy.push_back(nowy_pojazd);
+    return;
 }
 
 bool SystemRezerwacji::oplacRezerwacje(Rezerwacja& rezerwacja){ ///jako argument data platnosci?????
@@ -151,7 +96,8 @@ bool SystemRezerwacji::oplacRezerwacje(Rezerwacja& rezerwacja){ ///jako argument
 }
 
 bool SystemRezerwacji::oplacDodatkowe(Rezerwacja& rezerwacja){ ///jako argument data platnosci?????
-    rezerwacja.oplacDodatkowe() == 0;  //0-oplacono, 1-bylo juz wczesniej oplacone lub brak platnosci dodatkowej
+    return rezerwacja.oplacDodatkowe();  //0-oplacono, 1-bylo juz wczesniej oplacone lub brak platnosci dodatkowej
+    // co zwraca ta funkcja, skoro oplacDodatkowe w rezerwacji probuje ją zamknąć? -- > sprawdź
 }
 
 bool SystemRezerwacji::przedluz(Rezerwacja& rezerwacja){
@@ -159,7 +105,7 @@ bool SystemRezerwacji::przedluz(Rezerwacja& rezerwacja){
     return 0;
 }
 
-bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
+bool SystemRezerwacji::zarejestrujZwrotPojazdu(Rezerwacja& rezerwacja, int iloscDni){
     int okres_planowo = rezerwacja.zwrocOkresWypozyczenia();
 
     //zwrocenie pojazdom dostepnosci
@@ -201,8 +147,9 @@ bool SystemRezerwacji::zwrocPojazdy(Rezerwacja& rezerwacja, int iloscDni){
     }
 }
 
-void SystemRezerwacji::dodajKlienta(Klient& val){
-    klienci.push_back(val);
+void SystemRezerwacji::dodajKlienta(string imie, string nazwisko, string email, int id){
+    Klient nowy_klient = Klient(imie, nazwisko, email, id);
+    klienci.push_back(nowy_klient);
 }
 
 void SystemRezerwacji::dodajPlatnosc(Platnosc& val){
@@ -213,4 +160,67 @@ void SystemRezerwacji::dodajPracownika(Pracownik& val){
 }
 void SystemRezerwacji::dodajRezerwacje(Rezerwacja& val){
     rezerwacje.push_back(val);
+}
+
+void SystemRezerwacji::wypiszKlienci(){
+    if(klienci.size() == 0){
+        cout << "Brak klientów w systemie." << endl;
+        return;
+    }
+    else{
+        for (int i=0;i<klienci.size();i++){
+            klienci[i].wypiszDane();
+        }
+        return;
+    }
+    
+}
+
+void SystemRezerwacji::wypiszPracownicy(){
+    if (pracownicy.size() == 0){
+        cout << "Brak pracowników w systemie." << endl;
+        return;
+    }
+    else{
+        for (int i=0;i<pracownicy.size();i++){
+            pracownicy[i].wypiszDane();
+        }
+        return;
+    }
+    
+}
+
+void SystemRezerwacji::wypiszPlatnosci(){
+    if (platnosci.size() == 0){
+        cout << "Brak płatności w systemie." << endl;
+        return;
+    }
+    else{
+        for (int i=0;i<platnosci.size();i++){
+            platnosci[i].wypiszDane();
+        }
+        return;
+    }
+}
+
+void SystemRezerwacji::wypiszRezerwacje(){
+    if (rezerwacje.size()==0){
+        cout << "Brak rezerwacji w systemie." << endl;
+        return;
+    }else{
+        for (int i=0;i<rezerwacje.size();i++){
+            rezerwacje[i].wypiszDane();
+        }
+        return;
+    }
+}
+
+Rezerwacja SystemRezerwacji::zwrocWybranaRezerwacje(int id){
+    for (int i=0;i<rezerwacje.size();i++){
+        if (rezerwacje[i].zwrocId() == id){
+            return rezerwacje[i];
+        }
+    }
+    return Rezerwacja();
+    
 }

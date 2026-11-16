@@ -13,3 +13,12 @@ const string& Klient::zwrocEmail() const {
 void Klient::ustawEmail(const string& val){
     email = val;
 }
+
+void Klient::wypiszDane(){
+    cout << "ID: " << id 
+    << "; Imię: " << imie 
+    << "; Nazwisko: " << nazwisko 
+    << "; E-mail: " << email 
+    << endl;
+    return;
+}

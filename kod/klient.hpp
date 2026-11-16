@@ -4,6 +4,7 @@
 using namespace std;
 
 #include <string>
+#include <iostream>
 #include "osoba.hpp"
 
 
@@ -17,6 +18,8 @@ class Klient : public Osoba {
 
         const string& zwrocEmail() const;
         void ustawEmail(const string& val);
+
+        void wypiszDane();
 };
 
 #endif

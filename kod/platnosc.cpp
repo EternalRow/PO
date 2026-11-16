@@ -40,3 +40,17 @@ int Platnosc::zwrocId() const{
 void Platnosc::ustawId(int val){
     id = val;
 }
+
+void Platnosc::wypiszDane(){
+    cout << "ID: " << id
+    << " Kwota: " << kwota;
+    if (status == 0){
+        cout << " Status: nieopłacona";
+    }
+    else{
+        cout << " Status: opłacona";
+    }
+    cout << " Data przelewu: ";
+    dataPrzelewu.wypisz();
+    cout << endl;
+}
