@@ -8,6 +8,7 @@ using namespace std;
 
 class Pojazd{
     private:
+        int id;
         string marka;
         string model;
         int rocznik;
@@ -16,8 +17,11 @@ class Pojazd{
         bool status;
     
     public:
-        Pojazd(const string& marka="", const string& model="", int rocznik=0, const string& nrRej="", const Data& dataPrzegladu=Data(), bool status=0);
+        Pojazd(int id=0, const string& marka="", const string& model="", int rocznik=0, const string& nrRej="", const Data& dataPrzegladu=Data(), bool status=0);
         virtual ~Pojazd();
+
+        int zwrocId() const;
+        void ustawId(int val);
 
         const string& zwrocMarke() const;
         void ustawMarke(const string& val);

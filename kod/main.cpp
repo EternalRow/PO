@@ -33,18 +33,20 @@ int main(){
         cout << "\nWitamy w systemie rezerwacji pojazdów. Wybierz rolę." << endl;
         cout << "1-pracownik, 2-klient (dowolny inny znak aby wyjść z systemu)" << endl;
         cin >> rola;
-
+        cout << endl;
         if(rola == 1){ // czy pracownik powinien zalogowac sie; podać id pracownicze?
             while(true){
                 cout << endl << "Wybierz funkcjonalność, którą chcesz przetestować:" << endl
                 << "1 - wyświetlanie informacji" << endl
                 << "2 - dodawanie danych" << endl
                 << "3 - zarejestruj zwrot pojazdu" << endl
-                << "4 - usuń rezerwację z systemu" << endl // !!!!!!!!!dodaj poniżej (dekonstruktor)
+                << "4 - zamknij rezerwację" << endl
+                << "5 - usuwanie danych z systemu" << endl
                 << "dowolna inna wartość, aby wrócić do wyboru roli" << endl;
                 int funkcja = 0;
                 int opcja = 0;
                 cin >> funkcja;
+                cout << endl;
 
                 if (funkcja == 1){
                     cout << endl << "1 - wyświetl listę pojazdów" << endl
@@ -54,6 +56,7 @@ int main(){
                     << "5 - wyświetl listę rezerwacji" << endl
                     << "inna wartość - powrót do wyboru fukcjonalności" << endl;
                     cin >> opcja;
+                    cout << endl;
                     while (opcja < 1 || opcja > 5){
                         cout << "Podaj poprawną wartość." << endl;
                         cin >> opcja;
@@ -73,80 +76,56 @@ int main(){
                     cout << "1 - dodaj pojazd" << endl
                     << "2 - dodaj klienta" << endl;
                     cin >> opcja;
+                    cout << endl;
                     while (opcja < 0 || opcja > 2){
                         cout << "Podaj poprawną wartość." << endl;
                         cin >> opcja;
                     }
                     if (opcja == 1){
-                        string marka, model, nrRej;
-                        int rocznik, d, m, r;
-                        char kropka;
-                        cout << "Podaj markę: ";
-                        cin >> marka;
-                        cout << "Podaj model: ";
-                        cin >> model;
-                        cout << "Podaj numer rejestracyjny: ";
-                        cin >> nrRej;
-                        cout << "Podaj rocznik: ";
-                        cin >> rocznik;
-                        cout << "Podaj datę przeglądu w formacie DD.MM.RRRR (np. 31.04.2025): ";
-                        cin >> d >> kropka >> m >> kropka >> r;
-                        Data dataPrzeg = Data(d,m,r);
-                        system.dodajPojazd(marka, model, rocznik, nrRej, dataPrzeg, 1);
-                        cout << "Pomyślnie dodano pojazd." << endl;
+                        system.dodajPojazdInteraktywnie();
                     }else if(opcja == 2){
-                        string imie, nazwisko, email;
-                        int id;
-                        cout << "Podaj imię: ";
-                        cin >> imie;
-                        cout << "Podaj nazwisko: ";
-                        cin >> nazwisko;
-                        cout << "Podaj email: ";
-                        cin >> email;
-                        cout << "Podaj id: ";
-                        cin >> id;  // !!!sprawdzic czy unikalne?
-                        system.dodajKlienta(imie, nazwisko, email, id);
-                        cout << "Klient dodany pomyślnie." << endl;
+                        system.dodajKlientaInteraktywnie();
                     }
                 }else if (funkcja==3){
-                    cout << "Podaj numer id rezerwacji, jakiej dotyczy zwrot (0 by wyświetlić listę rezerwacji): ";
-                    int nr;
-                    cin >> nr;
-                    if (nr==0){
-                        system.wypiszRezerwacje();
-                        cout << "Podaj nr rezerwacji: ";
-                        cin >> nr; //zakładamy, że użytkownik poda prawidłowy numer ALE CHYBA NALEŻY SPRAWDZIĆ
+                    bool wyn = system.zarejestrujZwrotPojazdu();
+                    if (wyn){
+                        cout << "Zakończono proces zwrotu pojazdów. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
+                    }else{
+                        cout << "Nałożono płatność dodatkową za przedłużenie lub przekroczenie terminu zwrotu." << endl;
                     }
-                    Rezerwacja rez_do_zwrotu = system.zwrocWybranaRezerwacje(nr);
-                    cout << "Podaj okres (w dniach), przez jaki korzystano z pojazdów: ";
-                    int dni;
-                    cin >> dni;
-                    bool wyn = system.zarejestrujZwrotPojazdu(rez_do_zwrotu, dni);
-                    cout << "Zakończono proces zwrotu pojazdów" << endl; //!!!!!!!dodaj sprawdzenie, czy jednoczesnie zamknieto rezerwacje, czy moze dodano platnosc dodatkowa
+                }else if (funkcja==4){
+                    system.zamknijRezerwacje();
+                }else if (funkcja==5){
+                    while(true){
+                        int opcja;
+                        cout << "1 - usuń rezerwację" << endl
+                        << "2 - usuń pojazd" << endl
+                        << "3 - usuń klienta" << endl
+                        << "inna wartość - powrót do wyboru funkcjonalności" << endl;
+                        cin >> opcja;
+                        if (opcja==1){
+                            system.usunRezerwacje();
+                        }else if (opcja==2){
+                            system.usunPojazd();
+                        }else if (opcja==3){
+                            system.usunKlienta();
+                        }else{
+                            break;
+                        }
+                    }
                 }
                 else{
                     break;
                 }
             }
-            
         }
         else if (rola==2){
             string email;
-            Klient klient_rezerwujacy;
-            vector<Klient> klienci_w_systemie = system.zwrocKlienci();
             while(true){
                 cout << "Podaj email:" << endl;
                 cin >> email;
-                int liczba_iteracji=0;
-
-                for(int i=0;i<klienci_w_systemie.size();i++){
-                    if(klienci_w_systemie[i].zwrocEmail() == email){
-                        klient_rezerwujacy = klienci_w_systemie[i];
-                        break;
-                    }
-                    liczba_iteracji += 1;
-                }
-                if(liczba_iteracji==klienci_w_systemie.size()){
+                
+                if (system.walidujEmail(email)==false){
                     cout << "Niepoprawny email" << endl;
                 }
                 else{
@@ -157,62 +136,46 @@ int main(){
                     while(true){
                         cout << "\nWybierz funkcjonalność:" << endl
                         << "1 - wyświetl listę pojazdów" << endl
-                        << "2 - zarejestruj pojazd" << endl
+                        << "2 - zarezerwuj pojazd" << endl
                         << "3 - przedłuż rezerwację" << endl
                         << "4 - opłać rezerwację" << endl
                         << "5 - opłać płatności dodatkowe" << endl
+                        << "6 - wyświetl moje rezerwacje" << endl
                         << "inna wartość, aby powrócić do wyboru roli" << endl;
 
                         cin >> funkcja;
+                        cout << endl;
 
                         if(funkcja == 1){
                             system.katalog();
                         }else if(funkcja == 2){
-                            int opcja;
-                            cout << "Czy chcesz wyświetlić katalog przed wyborem pojazdu?" << endl
-                            << "1-tak, inna wartość - nie" << endl;
-                            cin >> opcja;
-
-                            if (opcja==1){
-                                system.katalog();
-                            }
-                            vector<Pojazd> pojazdy_w_systemie = system.zwrocPojazdy();
-                            vector<Pojazd> pojazdy_do_rezerwacji;
-                            int id_pojazdu;
-
-                            while (true){
-                                cout << "Podaj numer samochodu do rezerwacji lub wpisz 0, aby zakończyć: ";
-                                cin >> id_pojazdu;
-                                if (id_pojazdu == 0){
-                                    break;
-                                }else{
-                                    if (pojazdy_w_systemie[id_pojazdu-1].zwrocStatus() == 0){
-                                        cout << "Pojazd niedostępny." << endl;
-                                    }else{
-                                        pojazdy_do_rezerwacji.push_back(pojazdy_w_systemie[id_pojazdu-1]);
-                                    }
-                                }
-                            }
-                            if(pojazdy_do_rezerwacji.size() == 0){
-                                cout << "Nie wybrano samochodów. Wyjście z procesu rezerwacji..." << endl;
+                            system.zarezerwujInteraktywnie(email);
+                        }else if(funkcja==3){
+                            bool wyn = system.przedluz(email);
+                            if(wyn){
+                                cout << "Przedłużono termin zwrotu pojazdów o 7 dni dla rezerwacji o podanym ID." << endl;
                             }
                             else{
-
-                                cout << "Podaj datę wypożyczenia (odbioru) w formacie DD.MM.RRRR, np. 01.04.2027" << endl;
-                                int d, m, r;
-                                char kropka;
-                                cin >> d >> kropka >> m >> kropka >> r;
-                                Data data = Data(d,m,r);
-
-                                int okres;
-                                cout << "Podaj okres wypożyczenia w dniach: ";
-                                cin >> okres;
-
-                                Rezerwacja nowa_rez = system.zarezerwuj(klient_rezerwujacy, pojazdy_do_rezerwacji, data, okres);
-                                system.dodajRezerwacje(nowa_rez);
-                                cout << "Zarezerwowano samochód. Dokonaj płatności, aby ją aktywować." << endl;
+                                cout << "Nie udało się przedłużyć." << endl;
                             }
-                        }else{
+                        }else if(funkcja==4){
+                            bool wyn = system.oplacRezerwacje(email);
+                            if (wyn){
+                                cout << "Pomyślnie opłacono rezerwacje. Rezerwacja jest aktywna." << endl;
+                            }else{
+                                cout << "Nie udało się opłacić; rezerwacja jest już opłacona, lub podano błędne ID." << endl;
+                            }
+                        }else if(funkcja==5){ //wywalic couty do systemu?
+                            bool wyn = system.oplacDodatkowe(email);
+                            if (wyn){
+                                cout << "Pomyślnie opłacono. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
+                            }else{
+                                cout << "Nie udało się opłacić; rezerwacja nie wymaga dodatkowej opłaty, lub podano błędne ID." << endl;
+                            }
+                        }else if (funkcja==6){
+                            system.wypiszRezerwacjeKlienta(email);
+                        }
+                        else{
                             break;
                         }
                     }
@@ -225,5 +188,4 @@ int main(){
         }
 
     }
-    return 0;
 }

@@ -8,11 +8,18 @@ Status pojazdu
 #include <iostream>
 
 
-Pojazd::Pojazd(const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu, bool status)
-    : marka(marka), model(model), rocznik(rocznik), nrRej(nrRej), dataPrzegladu(dataPrzegladu), status(status) {}
+Pojazd::Pojazd(int id, const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu, bool status)
+    : id(id), marka(marka), model(model), rocznik(rocznik), nrRej(nrRej), dataPrzegladu(dataPrzegladu), status(status) {}
 
 Pojazd::~Pojazd() = default;
 
+int Pojazd::zwrocId() const{
+    return id;
+}
+
+void Pojazd::ustawId(int val){
+    id = val;
+}
 
 const string& Pojazd::zwrocMarke() const {
     return marka;
@@ -65,6 +72,7 @@ void Pojazd::ustawDatePrzegladu(int dzien, int miesiac, int rok){
 }
 
 void Pojazd::wypisz() const {
+    cout << id << ". ";
     if (status == 0){
         cout << "[NIEDOSTĘPNY] ";
     }
