@@ -52,12 +52,12 @@ class SystemRezerwacji{
         void zarezerwujInteraktywnie(string email);
         
         
-        bool oplacRezerwacje(string email);
-        bool oplacDodatkowe(string email);
+        void oplacRezerwacje(string email);
+        void oplacDodatkowe(string email);
 
-        bool przedluz(string email);
+        void przedluz(string email);
 
-        bool zarejestrujZwrotPojazdu();
+        void zarejestrujZwrotPojazdu();
 
         void zamknijRezerwacje();
 
@@ -95,6 +95,9 @@ class SystemRezerwacji{
         Pojazd& zwrocWybranyPojazd(int id);
 
         bool walidujEmail(string email);
+
+        void zmienStawkeDobowa();
+        void zmienKare();
 
 };
 

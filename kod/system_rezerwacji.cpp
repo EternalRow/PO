@@ -64,7 +64,7 @@ int SystemRezerwacji::zarezerwuj(string email, vector<Pojazd>& wybrane_pojazdy, 
     Klient klient_rez;
     for (Klient& klient : klienci){
         if(klient.zwrocEmail()==email){
-            klient_rez = klient;  ///!!! czy działa?
+            klient_rez = klient;
         }
     }
 
@@ -146,8 +146,7 @@ void SystemRezerwacji::katalog(){
     return;
 }
 
-//SPRAWDZ CZY DZIALA
-bool SystemRezerwacji::oplacRezerwacje(string email){ ///jako argument data platnosci?????
+void SystemRezerwacji::oplacRezerwacje(string email){
     int id_rez;
     cout << "Podaj ID rezerwacji, którą chcesz opłacić: ";
     cin >> id_rez;
@@ -158,24 +157,32 @@ bool SystemRezerwacji::oplacRezerwacje(string email){ ///jako argument data plat
     for (Rezerwacja& rez : rezerwacje){
         if (rez.zwrocId()==id_rez && rez.zwrocOplateRezerwacji().zwrocStatus()==0 && rez.zwrocKlienta().zwrocEmail()==email){
             if (rez.oplacRezerwacje()==0){
-                return 0;
+                cout << "Nie udało się opłacić; rezerwacja jest już opłacona, lub podano błędne ID." << endl;
+                return;
             }
+
+            cout << "Podaj datę przelewu w formacie DD.MM.RRRR, np. 01.01.2026: ";
+            int d,m,r;
+            char kropka;
+            cin >> d >> kropka >> m >> kropka >> r;
 
             int id_platnosci = rez.zwrocOplateRezerwacji().zwrocId();
             for (Platnosc& platnosc : platnosci){
                 if (platnosc.zwrocId()==id_platnosci){
                     platnosc.ustawStatus(1);
-                    break;
+                    platnosc.ustawDatePrzelewu(d,m,r);
+                    cout << "Pomyślnie opłacono rezerwacje. Rezerwacja jest aktywna." << endl;
+                    return;
                 }
             }
-            return 1;
         }
     }
-    return 0;
+    cout << "Nie udało się opłacić; rezerwacja jest już opłacona, lub podano błędne ID." << endl;
+    return;
 
 }
 
-bool SystemRezerwacji::oplacDodatkowe(string email){ ///jako argument data platnosci?????
+void SystemRezerwacji::oplacDodatkowe(string email){
     int id_rez;
     cout << "Podaj ID rezerwacji, dla której chcesz opłacić płatność dodatkową: ";
     cin >> id_rez;
@@ -183,23 +190,31 @@ bool SystemRezerwacji::oplacDodatkowe(string email){ ///jako argument data platn
     for (Rezerwacja& rez : rezerwacje){
         if (rez.zwrocId()==id_rez && rez.zwrocOplateDodatkowa().zwrocStatus()==0 && rez.zwrocKlienta().zwrocEmail()==email){
             if (rez.oplacDodatkowe()==0){
-                return 0;
+                cout << "Nie udało się opłacić; rezerwacja nie wymaga dodatkowej opłaty, lub podano błędne ID." << endl;
+                return;
             }
+
+            cout << "Podaj datę przelewu w formacie DD.MM.RRRR, np. 01.01.2026: ";
+            int d,m,r;
+            char kropka;
+            cin >> d >> kropka >> m >> kropka >> r;
 
             int id_platnosci = rez.zwrocOplateDodatkowa().zwrocId();
             for (Platnosc& platnosc : platnosci){
                 if (platnosc.zwrocId()==id_platnosci){
                     platnosc.ustawStatus(1);
+                    platnosc.ustawDatePrzelewu(d,m,r);
+                    cout << "Pomyślnie opłacono. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
+                    return;
                 }
             }
-
-            return 1;
         }
     }
-    return 0; //oplacona, bledne id rez lub oplata dodatkowa nie została nałożona
+    cout << "Nie udało się opłacić; rezerwacja nie wymaga dodatkowej opłaty, lub podano błędne ID." << endl;
+    return;
 }
 
-bool SystemRezerwacji::przedluz(string email){
+void SystemRezerwacji::przedluz(string email){
     int id_rez;
     cout << "Podaj ID rezerwacji, którą chcesz przedłużyć: ";
     cin >> id_rez;
@@ -207,13 +222,15 @@ bool SystemRezerwacji::przedluz(string email){
     for (Rezerwacja& rez : rezerwacje){
         if(rez.zwrocId()==id_rez && rez.zwrocStatus()==1 && rez.zwrocKlienta().zwrocEmail()==email && rez.zwrocPrzedluzono()==0){
             rez.ustawPrzedluzono(1);
-            return 1;
+            cout << "Przedłużono termin zwrotu pojazdów o 7 dni dla rezerwacji o podanym ID." << endl;
+            return;
         }
     }
-    return 0;
+    cout << "Nie udało się przedłużyć." << endl;
+    return;
 }
 
-bool SystemRezerwacji::zarejestrujZwrotPojazdu(){
+void SystemRezerwacji::zarejestrujZwrotPojazdu(){
     cout << "Podaj numer id rezerwacji, jakiej dotyczy zwrot (0 by wyświetlić listę rezerwacji): ";
     int nr;
     cin >> nr;
@@ -233,13 +250,11 @@ bool SystemRezerwacji::zarejestrujZwrotPojazdu(){
 
     int okres_planowo = rez_do_zwrotu.zwrocOkresWypozyczenia();
 
-    //zwrocenie pojazdom dostepnosci
-    //PRZEBUDUJ TO CAŁE ŻEBY DZIAŁAŁO NA LISTACH SYSTEMU
     vector<PozycjaRezerwacji> pozycje_rezerwacji = rez_do_zwrotu.zwrocPojazdy();
 
     for (int i=0;i<pozycje_rezerwacji.size();i++){
         zmienStatusPojazdu(pozycje_rezerwacji[i].zwrocPojazd().zwrocId(), 1);
-    } //!!!!!!!!!na liście!!! da sie wskaznikiem?
+    }
 
     if (rez_do_zwrotu.zwrocPrzedluzono() == 1){
         okres_planowo += 7;
@@ -247,7 +262,8 @@ bool SystemRezerwacji::zarejestrujZwrotPojazdu(){
     
     if (ilosc_dni <= okres_planowo && rez_do_zwrotu.zwrocPrzedluzono() == 0){
         rez_do_zwrotu.ustawStatus(3);
-        return 1;
+        cout << "Zakończono proces zwrotu pojazdów. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
+        return;
 
     }else if(ilosc_dni <= okres_planowo && rez_do_zwrotu.zwrocPrzedluzono() == 1){
         float kwota_za_przedluzenie = 7*stawkaDobowa*pozycje_rezerwacji.size();
@@ -256,9 +272,10 @@ bool SystemRezerwacji::zarejestrujZwrotPojazdu(){
         rez_do_zwrotu.ustawOplateDodatkowa(dodatkowa);
         
         platnosci.push_back(dodatkowa);
-        //zmienStatusRezerwacji(rezerwacja.zwrocId(), 2);
         rez_do_zwrotu.ustawStatus(2);
-        return 0;
+        
+        cout << "Nałożono płatność dodatkową za przedłużenie lub przekroczenie terminu zwrotu." << endl;
+        return;
     }
     else{ // kara za przetrzymanie samochodu ponad termin zwrotu
         vector<PozycjaRezerwacji> lista_zwracanych = rez_do_zwrotu.zwrocPojazdy();
@@ -269,8 +286,9 @@ bool SystemRezerwacji::zarejestrujZwrotPojazdu(){
         
         platnosci.push_back(rez_do_zwrotu.zwrocOplateDodatkowa());
         rez_do_zwrotu.ustawStatus(2);
-
-        return 0;
+        
+        cout << "Nałożono płatność dodatkową za przedłużenie lub przekroczenie terminu zwrotu." << endl;
+        return;
     }
 }
 
@@ -330,7 +348,7 @@ bool SystemRezerwacji::walidujIdKlienta(int id){
     return 1;
 }
 
-void SystemRezerwacji::dodajPojazd(string marka, string model, int rocznik, string nrRej, Data dataPrzegladu, int status){  // dodaje instancję obiektu Pojazd do katalogu pojazdów w systemie
+void SystemRezerwacji::dodajPojazd(string marka, string model, int rocznik, string nrRej, Data dataPrzegladu, int status){  // dodaje nowy Pojazd do katalogu pojazdów w systemie
     int id = pojazdy.size()+1;
     Pojazd nowy_pojazd = Pojazd(id, marka, model, rocznik, nrRej, dataPrzegladu, status);
     pojazdy.push_back(nowy_pojazd);
@@ -354,16 +372,6 @@ void SystemRezerwacji::dodajPojazdInteraktywnie(){
     Data dataPrzeg = Data(d,m,r);
     dodajPojazd(marka, model, rocznik, nrRej, dataPrzeg, 1);
     cout << "Pomyślnie dodano pojazd." << endl;
-}
-
-void SystemRezerwacji::dodajPlatnosc(Platnosc& val){
-    platnosci.push_back(val);
-}
-void SystemRezerwacji::dodajPracownika(Pracownik& val){
-    pracownicy.push_back(val);
-}
-void SystemRezerwacji::dodajRezerwacje(Rezerwacja& val){
-    rezerwacje.push_back(val);
 }
 
 void SystemRezerwacji::wypiszKlienci(){
@@ -560,22 +568,14 @@ int SystemRezerwacji::zwrocStatusDanegoPojazdu(int id_pojazdu){
         }
     }
     return -1;
-
 }
 
 Pojazd& SystemRezerwacji::zwrocWybranyPojazd(int id){
-    for(Pojazd& pojazd : pojazdy){  // zobacz gdzie to wywolywane; czy mozna przez ref?
+    for(Pojazd& pojazd : pojazdy){
         if (pojazd.zwrocId()==id){
             return pojazd;
         }
     }
-    /*
-    for(int i=0;i<pojazdy.size();i++){  // zobacz gdzie to wywolywane; czy mozna przez ref?
-        if (pojazdy[i].zwrocId()==id){
-            return pojazdy[i];
-        }
-    }
-    return Pojazd();*/
     throw out_of_range("Nie znaleziono pojazdu o podanym ID.");
 }
 
@@ -586,4 +586,40 @@ bool SystemRezerwacji::walidujEmail(string email){
         }
     }
     return 0;
+}
+
+void SystemRezerwacji::zmienStawkeDobowa(){
+    float kwota;
+    cout << "Obecnie stawka dobowa wynosi " << stawkaDobowa << " zł.\nPodaj nową wartość: ";
+    cin >> kwota;
+
+    while (kwota==0.0){
+        cout << "\nWartość musi być większa od 0. Podaj nową wartość: ";
+        cin >> kwota;
+    }
+    if (kwota == stawkaDobowa){
+        cout << "\nPodałeś kwotę, która jest już ustawiona.\n";
+        return;
+    }
+    ustawStawkeDobowa(kwota);
+    cout << "\nPomyślnie zmieniono stawkę dobową na kwotę " << kwota << " zł.\n";
+    return;
+}
+
+void SystemRezerwacji::zmienKare(){
+    float kwota;
+    cout << "Obecnie kara za dobę wynosi " << kara << " zł.\nPodaj nową wartość: ";
+    cin >> kwota;
+
+    while (kwota==0.0){
+        cout << "\nWartość musi być większa od 0. Podaj nową wartość: ";
+        cin >> kwota;
+    }
+    if (kwota == kara){
+        cout << "\nPodałeś kwotę, która jest już ustawiona.\n";
+        return;
+    }
+    ustawKare(kwota);
+    cout << "\nPomyślnie zmieniono stawkę kary na kwotę " << kwota << " zł.\n";
+    return;
 }

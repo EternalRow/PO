@@ -21,9 +21,9 @@ int main(){
     system.dodajPojazd("Toyota", "Corolla", 2021, "FZG001", Data(12,10,2026), 1);
     system.dodajPojazd("Hyundai", "Tucson", 2018, "FZG245", Data(12,10,2026), 1);
     
+    system.dodajKlienta("Jan", "Kowalski", "email@example.com", 10);
+    system.dodajKlienta("Anna", "Nowak", "anna@example.com", 11);
 
-    vector<Klient> klientela = {Klient("Jan", "Kowalski", "email@example.com", 10), Klient("Anna", "Nowak", "anna@example.com", 11)};
-    system.ustawKlienci(klientela);
     vector<Pracownik> pracownicy = {Pracownik("Aleksandra", "Maj", 101, 1), Pracownik("Katarzyna", "Kowal", 102, 2)};
     system.ustawPracownicy(pracownicy);
 
@@ -34,7 +34,7 @@ int main(){
         cout << "1-pracownik, 2-klient (dowolny inny znak aby wyjść z systemu)" << endl;
         cin >> rola;
         cout << endl;
-        if(rola == 1){ // czy pracownik powinien zalogowac sie; podać id pracownicze?
+        if(rola == 1){
             while(true){
                 cout << endl << "Wybierz funkcjonalność, którą chcesz przetestować:" << endl
                 << "1 - wyświetlanie informacji" << endl
@@ -42,6 +42,8 @@ int main(){
                 << "3 - zarejestruj zwrot pojazdu" << endl
                 << "4 - zamknij rezerwację" << endl
                 << "5 - usuwanie danych z systemu" << endl
+                << "6 - zmień stawkę dobową" << endl
+                << "7 - zmień stawkę kary" << endl
                 << "dowolna inna wartość, aby wrócić do wyboru roli" << endl;
                 int funkcja = 0;
                 int opcja = 0;
@@ -87,12 +89,7 @@ int main(){
                         system.dodajKlientaInteraktywnie();
                     }
                 }else if (funkcja==3){
-                    bool wyn = system.zarejestrujZwrotPojazdu();
-                    if (wyn){
-                        cout << "Zakończono proces zwrotu pojazdów. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
-                    }else{
-                        cout << "Nałożono płatność dodatkową za przedłużenie lub przekroczenie terminu zwrotu." << endl;
-                    }
+                    system.zarejestrujZwrotPojazdu();
                 }else if (funkcja==4){
                     system.zamknijRezerwacje();
                 }else if (funkcja==5){
@@ -113,6 +110,10 @@ int main(){
                             break;
                         }
                     }
+                }else if (funkcja==6){
+                    system.zmienStawkeDobowa();
+                }else if(funkcja==7){
+                    system.zmienKare();
                 }
                 else{
                     break;
@@ -151,27 +152,11 @@ int main(){
                         }else if(funkcja == 2){
                             system.zarezerwujInteraktywnie(email);
                         }else if(funkcja==3){
-                            bool wyn = system.przedluz(email);
-                            if(wyn){
-                                cout << "Przedłużono termin zwrotu pojazdów o 7 dni dla rezerwacji o podanym ID." << endl;
-                            }
-                            else{
-                                cout << "Nie udało się przedłużyć." << endl;
-                            }
+                            system.przedluz(email);
                         }else if(funkcja==4){
-                            bool wyn = system.oplacRezerwacje(email);
-                            if (wyn){
-                                cout << "Pomyślnie opłacono rezerwacje. Rezerwacja jest aktywna." << endl;
-                            }else{
-                                cout << "Nie udało się opłacić; rezerwacja jest już opłacona, lub podano błędne ID." << endl;
-                            }
-                        }else if(funkcja==5){ //wywalic couty do systemu?
-                            bool wyn = system.oplacDodatkowe(email);
-                            if (wyn){
-                                cout << "Pomyślnie opłacono. Po weryfikacji przez pracownika rezerwacja zostanie zamknięta." << endl;
-                            }else{
-                                cout << "Nie udało się opłacić; rezerwacja nie wymaga dodatkowej opłaty, lub podano błędne ID." << endl;
-                            }
+                            system.oplacRezerwacje(email);
+                        }else if(funkcja==5){
+                            system.oplacDodatkowe(email);
                         }else if (funkcja==6){
                             system.wypiszRezerwacjeKlienta(email);
                         }
