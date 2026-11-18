@@ -46,22 +46,35 @@ class SystemRezerwacji{
         const vector<Rezerwacja>& zwrocRezerwacje() const;
         void ustawRezerwacje(const vector<Rezerwacja>& val);
 
-        const Rezerwacja& zarezerwuj(Klient& klient, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia);
         void katalog();
+
+        int zarezerwuj(string email, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia);
+        void zarezerwujInteraktywnie(string email);
         
+        
+        bool oplacRezerwacje(string email);
+        bool oplacDodatkowe(string email);
 
-        bool oplacRezerwacje(Rezerwacja& rezerwacja);
-        bool oplacDodatkowe(Rezerwacja& rezerwacja);
+        bool przedluz(string email);
 
-        bool przedluz(Rezerwacja& rezerwacja);
+        bool zarejestrujZwrotPojazdu();
 
-        bool zarejestrujZwrotPojazdu(Rezerwacja& rezerwacja, int iloscDni);
-        // bool zakonczRezerwacje(Rezerwacja& rezerwacja);
+        void zamknijRezerwacje();
 
-        Rezerwacja zwrocWybranaRezerwacje(int id);
+        void zmienStatusPojazdu(int indeks, bool val);
+
+        void zmienStatusRezerwacji(int id, int val);
+
+        Rezerwacja& zwrocWybranaRezerwacje(int id);
 
         void dodajPojazd(string marka, string model, int rocznik, string nrRej, Data dataPrzegladu, int status);
+        void dodajPojazdInteraktywnie();
+
         void dodajKlienta(string imie, string nazwisko, string email, int id);
+        void dodajKlientaInteraktywnie();
+
+        bool walidujIdKlienta(int id);
+        
         void dodajPlatnosc(Platnosc& val);
         void dodajRezerwacje(Rezerwacja& val);
         void dodajPracownika(Pracownik& val);
@@ -70,6 +83,18 @@ class SystemRezerwacji{
         void wypiszPlatnosci();
         void wypiszPracownicy();
         void wypiszRezerwacje();
+
+
+        void usunRezerwacje();
+        void usunPojazd();
+        void usunKlienta();
+
+        void wypiszRezerwacjeKlienta(string email);
+
+        int zwrocStatusDanegoPojazdu(int id_pojazdu);
+        Pojazd& zwrocWybranyPojazd(int id);
+
+        bool walidujEmail(string email);
 
 };
 
