@@ -17,7 +17,7 @@ class Data{
         void ustawMiesiac(int val);
         void ustawRok(int val);
 
-        void wypisz();
+        void wypisz() const;
 };
 
 #endif

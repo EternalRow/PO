@@ -26,7 +26,7 @@ class Platnosc{
         int zwrocId() const;
         void ustawId(int val);
 
-        void wypiszDane();
+        void wypiszDane() const;
 
 };
 

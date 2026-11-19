@@ -7,7 +7,7 @@ Platnosc::Platnosc(float kwota, int status, const Data& dataPrzelewu, int id)
 Platnosc::~Platnosc() = default;
 
 
-void Platnosc::ustawDatePrzelewu(int dzien, int miesiac, int rok){
+void Platnosc::ustawDatePrzelewu(int dzien, int miesiac, int rok) {
     dataPrzelewu.ustawDzien(dzien);
     dataPrzelewu.ustawMiesiac(miesiac);
     dataPrzelewu.ustawRok(rok);
@@ -33,7 +33,7 @@ void Platnosc::ustawId(int val){
     id = val;
 }
 
-void Platnosc::wypiszDane(){
+void Platnosc::wypiszDane() const{
     cout << "ID: " << id
     << " Kwota: " << kwota;
     if (status == 0){

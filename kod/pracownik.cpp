@@ -5,7 +5,7 @@ Pracownik::Pracownik(const string& imie, const string& nazwisko, int id, int idP
 
 Pracownik::~Pracownik() = default;
 
-void Pracownik::wypiszDane(){
+void Pracownik::wypiszDane() const{
     cout << "ID pracownicze: " << idPracownicze
     << "; Imię: " << imie
     << "; Nazwisko: " << nazwisko << endl;

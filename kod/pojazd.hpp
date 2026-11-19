@@ -7,6 +7,12 @@ using namespace std;
 #include <string>
 #include <iostream>
 
+/*
+Status pojazdu
+0 - niedostepny
+1 - dostepny
+*/
+
 class Pojazd{
     private:
         int id;

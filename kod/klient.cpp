@@ -10,7 +10,7 @@ const string& Klient::zwrocEmail() const {
     return email;
 }
 
-void Klient::wypiszDane(){
+void Klient::wypiszDane() const{
     cout << "ID: " << id 
     << "; Imię: " << imie 
     << "; Nazwisko: " << nazwisko 

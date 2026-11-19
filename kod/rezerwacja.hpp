@@ -57,7 +57,7 @@ class Rezerwacja{
         bool oplacDodatkowe();
         bool zakoncz();
 
-        void wypiszDane();
+        void wypiszDane() const;
 
 };
 

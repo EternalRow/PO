@@ -18,7 +18,7 @@ class Klient : public Osoba {
 
         const string& zwrocEmail() const;
 
-        void wypiszDane();
+        void wypiszDane() const;
 };
 
 #endif

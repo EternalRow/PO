@@ -81,7 +81,7 @@ bool Rezerwacja::zakoncz(){
     return 1;
 }
 
-void Rezerwacja::wypiszDane(){
+void Rezerwacja::wypiszDane() const{
     cout << "ID rezerwacji: " << id << endl;
     cout << "ID klienta: " << klient.zwrocId() << endl;
     cout << "Ilość wypożyczonych pojazdów: " << pojazdy.size() << endl;

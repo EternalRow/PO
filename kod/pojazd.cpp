@@ -1,11 +1,4 @@
-/*
-Status pojazdu
-0 - niedostepny
-1 - dostepny
-*/
-
 #include "pojazd.hpp"
-
 
 
 Pojazd::Pojazd(int id, const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu, bool status)
