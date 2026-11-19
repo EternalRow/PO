@@ -7,10 +7,6 @@ Platnosc::Platnosc(float kwota, int status, const Data& dataPrzelewu, int id)
 Platnosc::~Platnosc() = default;
 
 
-const Data& Platnosc::zwrocDatePrzelewu() const{
-    return dataPrzelewu;
-}
-
 void Platnosc::ustawDatePrzelewu(int dzien, int miesiac, int rok){
     dataPrzelewu.ustawDzien(dzien);
     dataPrzelewu.ustawMiesiac(miesiac);
@@ -19,10 +15,6 @@ void Platnosc::ustawDatePrzelewu(int dzien, int miesiac, int rok){
 
 float Platnosc::zwrocKwote() const {
     return kwota;
-}
-
-void Platnosc::ustawKwote(float val){
-    kwota = val;
 }
 
 int Platnosc::zwrocStatus() const{

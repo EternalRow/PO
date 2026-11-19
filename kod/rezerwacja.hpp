@@ -9,6 +9,15 @@ using namespace std;
 #include <vector>
 #include "pozycja_rezerwacji.hpp"
 
+/*
+Oznaczenia statusu rezeerwacji:
+0 - niezaplacone; nieaktywna
+1 - aktywna, oplacona;
+2 - zwrocono pojazdy, nieoplacono platnosci dodatkowej
+3 - rezerwacja oczekuje na zamknięcie
+4 - rezerwacja zamknięta;
+*/
+
 class Rezerwacja{
     private:
         int id;
@@ -26,13 +35,8 @@ class Rezerwacja{
         virtual ~Rezerwacja();
 
         int zwrocId() const;
-        void ustawId(int val);
 
         const vector<PozycjaRezerwacji>& zwrocPojazdy() const;
-        void ustawPojazdy(const vector<PozycjaRezerwacji>& val);
-
-        const Data& zwrocDateRezerwacji() const;
-        void ustawDateRezerwacji(const Data& val);
 
         int zwrocStatus() const;
         void ustawStatus(int val);
@@ -41,13 +45,10 @@ class Rezerwacja{
         void ustawPrzedluzono(bool val);
 
         int zwrocOkresWypozyczenia() const;
-        void ustawOkresWypozyczenia(int val);
 
         const Klient& zwrocKlienta() const;
-        void ustawKlienta(const Klient& val);
 
         const Platnosc& zwrocOplateRezerwacji() const;
-        void ustawOplateRezerwacji(const Platnosc& val);
 
         const Platnosc& zwrocOplateDodatkowa() const;
         void ustawOplateDodatkowa(const Platnosc& val);

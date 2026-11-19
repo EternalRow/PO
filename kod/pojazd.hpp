@@ -5,6 +5,7 @@ using namespace std;
 
 #include "data.hpp"
 #include <string>
+#include <iostream>
 
 class Pojazd{
     private:
@@ -21,22 +22,6 @@ class Pojazd{
         virtual ~Pojazd();
 
         int zwrocId() const;
-        void ustawId(int val);
-
-        const string& zwrocMarke() const;
-        void ustawMarke(const string& val);
-        
-        const string& zwrocModel() const;
-        void ustawModel(const string& val);
-        
-        int zwrocRocznik() const;
-        void ustawRocznik(int val);
-        
-        const string& zwrocNrRej() const;
-        void ustawNrRej(const string& val);
-
-        const Data& zwrocDatePrzegladu() const;
-        void ustawDatePrzegladu(int dzien, int miesiac, int rok);
 
         bool zwrocStatus() const;
         void ustawStatus(bool val);

@@ -17,7 +17,6 @@ class Klient : public Osoba {
         virtual ~Klient();
 
         const string& zwrocEmail() const;
-        void ustawEmail(const string& val);
 
         void wypiszDane();
 };

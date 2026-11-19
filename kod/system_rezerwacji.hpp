@@ -10,6 +10,7 @@ using namespace std;
 #include "pracownik.hpp"
 #include <vector>
 #include <string>
+#include <iostream>
 
 class SystemRezerwacji{
     private:
@@ -25,32 +26,10 @@ class SystemRezerwacji{
         SystemRezerwacji(float stawkaDobowa=200.0, float kara=350.0, const vector<Klient> klienci={}, const vector<Pracownik> pracownicy={}, const vector<Pojazd> pojazdy={}, const vector<Rezerwacja> rezerwacje={}, const vector<Platnosc> platnosci={});
         virtual ~SystemRezerwacji();
 
-        float zwrocStawkeDobowa() const;
-        void ustawStawkeDobowa(float val);
-
-        float zwrocKare() const;
-        void ustawKare(float val);
-        
-        const vector<Klient>& zwrocKlienci() const;
-        void ustawKlienci(const vector<Klient>& val);
-
-        const vector<Platnosc>& zwrocPlatnosci() const;
-        void ustawPlatnosci(const vector<Platnosc>& val);
-
-        const vector<Pracownik>& zwrocPracownicy() const;
-        void ustawPracownicy(const vector<Pracownik>& val);
-
-        const vector<Pojazd>& zwrocPojazdy() const;
-        void ustawPojazdy(const vector<Pojazd>& val);
-
-        const vector<Rezerwacja>& zwrocRezerwacje() const;
-        void ustawRezerwacje(const vector<Rezerwacja>& val);
-
         void katalog();
 
         int zarezerwuj(string email, vector<Pojazd>& pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia);
         void zarezerwujInteraktywnie(string email);
-        
         
         void oplacRezerwacje(string email);
         void oplacDodatkowe(string email);
@@ -58,6 +37,7 @@ class SystemRezerwacji{
         void przedluz(string email);
 
         void zarejestrujZwrotPojazdu();
+        bool walidujRezerwacje(int id);
 
         void zamknijRezerwacje();
 
@@ -73,11 +53,9 @@ class SystemRezerwacji{
         void dodajKlienta(string imie, string nazwisko, string email, int id);
         void dodajKlientaInteraktywnie();
 
+        void dodajPracownika(string imie, string nazwisko, int id, int idPracownicze);
+
         bool walidujIdKlienta(int id);
-        
-        void dodajPlatnosc(Platnosc& val);
-        void dodajRezerwacje(Rezerwacja& val);
-        void dodajPracownika(Pracownik& val);
 
         void wypiszKlienci();
         void wypiszPlatnosci();

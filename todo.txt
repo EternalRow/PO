@@ -1,15 +1,6 @@
-- dodac printy wyrzucające zbiórcze informacje o danej instnajci klasy?
-- funkcja zwracajaca ilosc (dlugosc wektora) platnosci, rezerwacji itp?
--dodac do diagramu klas pole kara: float w systemie rezerwacji
-- kara obliczana razy ilosc aut 
-- platnosc razy ilosc aut
-- !!!!!!!!!!przeniesc funkcjonalnosc niektorych metod systemu do rezerwacji/platnosci/pojazdu
+komenda do kompilacji w folderze /kod:
+g++ -g (Get-ChildItem *.cpp).Name -o main.exe
 
-
-
-
-fanaberie:
-- dodac do rezerwacji po oddaniu samochodu okrews przez jaki byl przetrzymywany
 
 done (diagram):
 - metoda zarezerwuj w systemieRezerwacji powinna przyjmowac vector z pojazdami zamiast nr pojazdu (mozliwosc rezerwacji wielu pojazdow)

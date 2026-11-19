@@ -5,7 +5,7 @@ Status pojazdu
 */
 
 #include "pojazd.hpp"
-#include <iostream>
+
 
 
 Pojazd::Pojazd(int id, const string& marka, const string& model, int rocznik, const string& nrRej, const Data& dataPrzegladu, bool status)
@@ -17,58 +17,12 @@ int Pojazd::zwrocId() const{
     return id;
 }
 
-void Pojazd::ustawId(int val){
-    id = val;
-}
-
-const string& Pojazd::zwrocMarke() const {
-    return marka;
-}
-
-void Pojazd::ustawMarke(const string& val){
-    marka = val;
-}
-
-const string& Pojazd::zwrocModel() const{
-    return model;
-}
-
-void Pojazd::ustawModel(const string& val){
-    model = val;
-}
-
-int Pojazd::zwrocRocznik() const{
-    return rocznik;
-}
-
-void Pojazd::ustawRocznik(int val){
-    rocznik = val;
-}
-
-const string& Pojazd::zwrocNrRej() const{
-    return nrRej;
-}
-
-void Pojazd::ustawNrRej(const string& val){
-    nrRej = val;
-}
-
-const Data& Pojazd::zwrocDatePrzegladu() const{
-    return dataPrzegladu;
-}
-
 bool Pojazd::zwrocStatus() const{
     return status;
 }
 
 void Pojazd::ustawStatus(bool val){
     status = val;
-}
-
-void Pojazd::ustawDatePrzegladu(int dzien, int miesiac, int rok){
-    dataPrzegladu.ustawDzien(dzien);
-    dataPrzegladu.ustawMiesiac(miesiac);
-    dataPrzegladu.ustawRok(rok);
 }
 
 void Pojazd::wypisz() const {

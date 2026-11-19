@@ -13,7 +13,6 @@ class PozycjaRezerwacji{
         virtual ~PozycjaRezerwacji();
 
         const Pojazd& zwrocPojazd() const;
-        void ustawPojazd(const Pojazd& val);
 
 };
 

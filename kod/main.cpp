@@ -24,8 +24,8 @@ int main(){
     system.dodajKlienta("Jan", "Kowalski", "email@example.com", 10);
     system.dodajKlienta("Anna", "Nowak", "anna@example.com", 11);
 
-    vector<Pracownik> pracownicy = {Pracownik("Aleksandra", "Maj", 101, 1), Pracownik("Katarzyna", "Kowal", 102, 2)};
-    system.ustawPracownicy(pracownicy);
+    system.dodajPracownika("Aleksandra", "Maj", 101, 1);
+    system.dodajPracownika("Katarzyna", "Kowal", 102, 2);
 
     // MENU
     while(true){

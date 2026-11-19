@@ -13,12 +13,7 @@ class Osoba {
         Osoba(const string& imie="", const string& nazwisko="", int id=0);
         virtual ~Osoba();
 
-        const string& zwrocImie() const;
-        void ustawImie(const string& val);
-        const string& zwrocNazwisko() const;
-        void ustawNazwisko(const string& val);
         int zwrocId() const;
-        void ustawId(int val);
 };
 
 #endif

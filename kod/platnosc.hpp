@@ -20,9 +20,7 @@ class Platnosc{
         void ustawStatus(int val);
 
         float zwrocKwote() const;
-        void ustawKwote(float val);
 
-        const Data& zwrocDatePrzelewu() const;
         void ustawDatePrzelewu(int dzien, int miesiac, int rok);
 
         int zwrocId() const;

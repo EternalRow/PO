@@ -5,15 +5,6 @@ Pracownik::Pracownik(const string& imie, const string& nazwisko, int id, int idP
 
 Pracownik::~Pracownik() = default;
 
-
-int Pracownik::zwrocIdPracownicze() const {
-    return idPracownicze;
-}
-
-void Pracownik::ustawIdPracownicze(int val){
-    idPracownicze = val;
-}
-
 void Pracownik::wypiszDane(){
     cout << "ID pracownicze: " << idPracownicze
     << "; Imię: " << imie

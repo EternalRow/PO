@@ -1,61 +1,10 @@
 #include "system_rezerwacji.hpp"
-#include <bits/stdc++.h> // do funkcji find
-#include <iostream>
+
 
 SystemRezerwacji::SystemRezerwacji(float stawkaDobowa, float kara, const vector<Klient> klienci, const vector<Pracownik> pracownicy, const vector<Pojazd> pojazdy, const vector<Rezerwacja> rezerwacje, const vector<Platnosc> platnosci)
     : stawkaDobowa(stawkaDobowa), kara(kara), klienci(klienci), platnosci(platnosci), pracownicy(pracownicy), pojazdy(pojazdy), rezerwacje(rezerwacje) {}
 
 SystemRezerwacji::~SystemRezerwacji() = default;
-
-
-float SystemRezerwacji::zwrocStawkeDobowa() const{
-    return stawkaDobowa;
-}
-void SystemRezerwacji::ustawStawkeDobowa(float val){
-    stawkaDobowa = val;
-}
-
-float SystemRezerwacji::zwrocKare() const{
-    return kara;
-}
-void SystemRezerwacji::ustawKare(float val){
-    kara = val;
-}
-
-const vector<Klient>& SystemRezerwacji::zwrocKlienci() const{
-    return klienci;
-}
-void SystemRezerwacji::ustawKlienci(const vector<Klient>& val){
-    klienci = val;
-}
-
-const vector<Platnosc>& SystemRezerwacji::zwrocPlatnosci() const{
-    return platnosci;
-}
-void SystemRezerwacji::ustawPlatnosci(const vector<Platnosc>& val){
-    platnosci = val;
-}
-
-const vector<Pracownik>& SystemRezerwacji::zwrocPracownicy() const{
-    return pracownicy;
-}
-void SystemRezerwacji::ustawPracownicy(const vector<Pracownik>& val){
-    pracownicy = val;
-}
-
-const vector<Pojazd>& SystemRezerwacji::zwrocPojazdy() const{
-    return pojazdy;
-}
-void SystemRezerwacji::ustawPojazdy(const vector<Pojazd>& val){
-    pojazdy = val;
-}
-
-const vector<Rezerwacja>& SystemRezerwacji::zwrocRezerwacje() const{
-    return rezerwacje;
-}
-void SystemRezerwacji::ustawRezerwacje(const vector<Rezerwacja>& val){
-    rezerwacje = val;
-}
 
 int SystemRezerwacji::zarezerwuj(string email, vector<Pojazd>& wybrane_pojazdy, Data& data_wypozyczenia, int okres_wypozyczenia){
     int id_rez = rezerwacje.size()+1;
@@ -242,6 +191,10 @@ void SystemRezerwacji::zarejestrujZwrotPojazdu(){
         cout << endl;
     }
 
+    if (!walidujRezerwacje(nr)){
+        cout << "Nie ma takiej rezerwacji.\n";
+        return;
+    }
     Rezerwacja& rez_do_zwrotu = zwrocWybranaRezerwacje(nr);
 
     cout << "Podaj okres (w dniach), przez jaki korzystano z pojazdów: ";
@@ -292,6 +245,15 @@ void SystemRezerwacji::zarejestrujZwrotPojazdu(){
     }
 }
 
+bool SystemRezerwacji::walidujRezerwacje(int id){
+    for (Rezerwacja& rez : rezerwacje){
+        if (rez.zwrocId()==id){
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void SystemRezerwacji::zamknijRezerwacje(){
     int id;
     cout << "Podaj ID rezerwacji do zamknięcia lub wciśnij 0, aby wyświetlić listę rezerwacji: ";
@@ -303,6 +265,12 @@ void SystemRezerwacji::zamknijRezerwacje(){
         cin >> id;
         cout << endl;
     }
+
+    if (!walidujRezerwacje(id)){
+        cout << "Nie ma takiej rezerwacji.\n";
+        return;
+    }
+
     Rezerwacja& rez_do_zamk = zwrocWybranaRezerwacje(id);
     if (rez_do_zamk.zwrocStatus()==3){
         rez_do_zamk.ustawStatus(4);
@@ -316,7 +284,15 @@ void SystemRezerwacji::zamknijRezerwacje(){
 void SystemRezerwacji::dodajKlienta(string imie, string nazwisko, string email, int id){
     Klient nowy_klient = Klient(imie, nazwisko, email, id);
     klienci.push_back(nowy_klient);
+    return;
 }
+
+void SystemRezerwacji::dodajPracownika(string imie, string nazwisko, int id, int idPracownicze){
+    Pracownik nowy_pracownik = Pracownik(imie, nazwisko, id, idPracownicze);
+    pracownicy.push_back(nowy_pracownik);
+    return;
+}
+
 
 void SystemRezerwacji::dodajKlientaInteraktywnie(){
     string imie, nazwisko, email;
@@ -342,6 +318,11 @@ void SystemRezerwacji::dodajKlientaInteraktywnie(){
 bool SystemRezerwacji::walidujIdKlienta(int id){
     for(Klient& klient : klienci){
         if (klient.zwrocId()==id){
+            return 0;
+        }
+    }
+    for (Pracownik& pracownik : pracownicy){
+        if (pracownik.zwrocId()==id){
             return 0;
         }
     }
@@ -601,7 +582,7 @@ void SystemRezerwacji::zmienStawkeDobowa(){
         cout << "\nPodałeś kwotę, która jest już ustawiona.\n";
         return;
     }
-    ustawStawkeDobowa(kwota);
+    stawkaDobowa = kwota;
     cout << "\nPomyślnie zmieniono stawkę dobową na kwotę " << kwota << " zł.\n";
     return;
 }
@@ -619,7 +600,7 @@ void SystemRezerwacji::zmienKare(){
         cout << "\nPodałeś kwotę, która jest już ustawiona.\n";
         return;
     }
-    ustawKare(kwota);
+    kara = kwota;
     cout << "\nPomyślnie zmieniono stawkę kary na kwotę " << kwota << " zł.\n";
     return;
 }
